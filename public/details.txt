@@ -1,0 +1,59 @@
+SUMIT HATEKAR
+Full Stack Developer
+Pune, India · sumithatekar9@gmail.com · +91 7387155502 · github.com/sumit1456 · linkedin.com/in/sumit-hatekar123
+Profile Summary
+Full Stack Developer with experience building performance-focused web applications and document editing systems. Strong
+background in Java, JavaScript, and modern frontend frameworks, with hands-on experience in WebGL rendering and
+backend-driven PDF processing pipelines. Focused on layout accuracy, data transformation, and maintainable system
+design.
+Technical Skills
+Languages: Java, JavaScript, TypeScript, SQL, HTML5, CSS3
+Backend & APIs: RESTful APIs, Authentication & Authorization (RBAC), DTO Mapping, Validation, Error Handling,
+Pagination, API Security Basics
+Frameworks & Libraries: Spring Boot, Spring Security (JWT basics), React, Redux, PixiJS (WebGL)
+Databases: PostgreSQL, MySQL, Oracle SQL, Hibernate, Spring Data JPA
+PDF&Graphics: ApachePDF,jsPDF,PyMuPDF,CanvasAPI,CoordinateSystems, Bounding Boxes, Layout Engines
+Tools: Git, GitHub, Docker, Maven, Postman, AWS, Netlify, Render
+Experience
+Full Stack Developer — Freelance / Client Project (Education Domain)
+•
+2025– Present
+Developed an end-to-end Exam Management System (MRB Exam Management) based on academic requirements.
+• Designed modules for exam creation, student management, hall ticket generation, and result processing.
+• Built frontend interfaces using React and backend APIs using Spring Boot for secure data handling.
+Projects
+ResumeMaker Pro — GPU-Accelerated Resume Editor [Link]
+React, PixiJS (WebGL), Spring Boot, Java (Apache PDF), jsPDF
+Sep 2025– Dec 2025
+• Built a browser-based resume editor using React and PixiJS to render layout guides and graphical elements.
+• Used a hybrid rendering approach combining WebGL graphics with DOM-based text to preserve ATS compatibility.
+• Implemented a Spring Boot backend for PDF generation using a Java PDF library.
+• Ensured exported PDFs remain searchable and visually consistent across different viewers.
+PDF Editor App — JSON-Based PDF Reconstruction [Link]
+Python, FastAPI, PyMuPDF, React
+Dec 2025– Present
+• Built a PDF processing backend using FastAPI and PyMuPDF to extract structured JSON from documents.
+• Regenerated PDFs from extracted JSON while preserving approximately 90–100% visual layout fidelity.
+• Replaced system and embedded fonts with Google Fonts during PDF regeneration.
+• Maintained consistent coordinate mapping between extracted data and regenerated output.
+DOM-WebGL Rendering Engine [Link]
+PixiJS (WebGL), Web Workers, Canvas API
+Nov 2025– Present
+• Developed a custom WebGL rendering engine for layout primitives, bounding boxes, and vector shapes.
+• Rendered complex scenes with 2,600+ scene-graph nodes per page while maintaining smooth interaction.
+• Implemented coordinate normalization and scene-graph management for accurate transformations.
+Education
+Master of Science in Computer Applications
+Savitribai Phule Pune University — First Semester: 89.63%
+Bachelor of Science in Chemistry
+Shivaji University — 65%
+Higher Secondary Certificate
+Yashwantrao Chavan Institute of Science, Satara — 84%
+Secondary School Certificate
+The Modern English School, Koregaon — 87%
+Certifications
+2025– 2027 (Expected)
+2021– 2024
+2019– 20212
+2018– 2019
+Java Full Stack Development — QSpiders Wakad (2024)
