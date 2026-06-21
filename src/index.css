@@ -146,3 +146,112 @@ body {
 .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
 .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes blink { 0%, 100% { opacity: 0.2; } 20% { opacity: 1; } }
+
+/* Structured Chatbot Response Styles */
+.message-highlights {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #E8E2D9;
+}
+
+.section-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8B8480;
+  margin-bottom: 6px;
+}
+
+.message-highlights ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.message-highlights li {
+  font-size: 12px;
+  color: #4A403A;
+  margin-bottom: 6px;
+  padding: 6px 10px;
+  background: rgba(193, 123, 47, 0.05);
+  border-radius: 6px;
+  border-left: 3px solid #C17B2F;
+}
+
+.message-citations {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #E8E2D9;
+}
+
+.citation-tag {
+  font-family: monospace;
+  font-size: 11px;
+  padding: 3px 6px;
+  background: #F0EBE0;
+  border: 1px solid #DDD5C7;
+  border-radius: 4px;
+  color: #6b6560;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.citation-tag.clickable {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.citation-tag.clickable:hover {
+  background: #C17B2F;
+  color: #fff;
+  border-color: #C17B2F;
+}
+
+.suggested-questions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+
+.suggestion-pill {
+  background: #FEFCF8;
+  border: 1px solid #E8E2D9;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 11px;
+  color: #6b6560;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.suggestion-pill:hover:not(:disabled) {
+  background: #C17B2F;
+  color: #fff;
+  border-color: #C17B2F;
+  transform: translateY(-1px);
+}
+
+.suggestion-pill:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bot-li {
+  position: relative;
+  padding-left: 14px;
+}
+
+.bot-li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #C17B2F;
+  font-weight: bold;
+}

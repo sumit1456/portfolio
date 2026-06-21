@@ -38,24 +38,123 @@ const Chatbot = () => {
   const formatText = (text) => {
     if (!text) return '';
 
-    // Simple markdown-to-React formatter
-    return text.split('\n').map((line, i) => {
-      // Bold
-      let parts = line.split(/(\*\*.*?\*\*)/g);
-      const renderedLine = parts.map((part, j) => {
+    const lines = text.split('\n');
+    const elements = [];
+    let currentList = [];
+
+    const flushList = (key) => {
+      if (currentList.length > 0) {
+        elements.push(
+          <ul key={`ul-${key}`} className="bot-ul" style={{ margin: '8px 0', paddingLeft: '0', listStyleType: 'none' }}>
+            {currentList}
+          </ul>
+        );
+        currentList = [];
+      }
+    };
+
+    const formatInline = (str) => {
+      if (!str) return '';
+      const tokenRegex = /(\*\*.*?\*\*|`.*?`)/g;
+      const parts = str.split(tokenRegex);
+      return parts.map((part, idx) => {
         if (part.startsWith('**') && part.endsWith('**')) {
-          return <strong key={j}>{part.slice(2, -2)}</strong>;
+          return <strong key={idx} style={{ fontWeight: '600', color: 'var(--text-primary)' }}>{part.slice(2, -2)}</strong>;
+        }
+        if (part.startsWith('`') && part.endsWith('`')) {
+          return (
+            <code 
+              key={idx} 
+              style={{ 
+                fontFamily: 'var(--font-mono)', 
+                fontSize: '0.8em', 
+                background: 'var(--bg-raised)', 
+                padding: '2px 5px', 
+                borderRadius: '4px', 
+                border: '1px solid var(--divider)',
+                color: 'var(--accent)'
+              }}
+            >
+              {part.slice(1, -1)}
+            </code>
+          );
         }
         return part;
       });
+    };
 
-      // Bullets
-      if (line.trim().startsWith('* ')) {
-        return <li key={i} className="bot-li">{renderedLine.slice(1)}</li>;
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trim();
+
+      if (trimmed === '---') {
+        flushList(i);
+        elements.push(<hr key={i} style={{ border: '0', borderTop: '1px solid var(--divider)', margin: '12px 0' }} />);
+        continue;
       }
 
-      return <p key={i}>{renderedLine}</p>;
-    });
+      const headerMatch = trimmed.match(/^(#{1,6})\s+(.*)$/);
+      if (headerMatch) {
+        flushList(i);
+        const level = headerMatch[1].length;
+        const content = formatInline(headerMatch[2]);
+        const style = {
+          fontFamily: 'var(--font-display)',
+          fontWeight: '600',
+          color: 'var(--text-primary)',
+          marginTop: '12px',
+          marginBottom: '6px',
+          lineHeight: '1.2'
+        };
+
+        if (level === 1) elements.push(<h1 key={i} style={{ ...style, fontSize: '1.2rem' }}>{content}</h1>);
+        else if (level === 2) elements.push(<h2 key={i} style={{ ...style, fontSize: '1.1rem' }}>{content}</h2>);
+        else elements.push(<h3 key={i} style={{ ...style, fontSize: '1.0rem' }}>{content}</h3>);
+        continue;
+      }
+
+      if (trimmed.startsWith('>')) {
+        flushList(i);
+        const content = formatInline(trimmed.substring(1).trim());
+        elements.push(
+          <blockquote 
+            key={i} 
+            style={{ 
+              borderLeft: '3px solid var(--accent)', 
+              paddingLeft: '10px', 
+              margin: '8px 0', 
+              color: 'var(--text-secondary)',
+              fontStyle: 'italic'
+            }}
+          >
+            {content}
+          </blockquote>
+        );
+        continue;
+      }
+
+      const listMatch = line.match(/^(\s*)[*+-]\s+(.*)$/);
+      if (listMatch) {
+        const content = formatInline(listMatch[2]);
+        currentList.push(
+          <li key={`li-${i}-${currentList.length}`} className="bot-li" style={{ marginBottom: '4px', fontSize: '0.86rem', position: 'relative', paddingLeft: '18px' }}>
+            {content}
+          </li>
+        );
+        continue;
+      }
+
+      if (trimmed !== '') {
+        flushList(i);
+        elements.push(<p key={i} style={{ marginBottom: '8px', lineHeight: '1.6' }}>{formatInline(line)}</p>);
+      } else {
+        flushList(i);
+        elements.push(<div key={i} style={{ height: '4px' }} />);
+      }
+    }
+
+    flushList(lines.length);
+    return elements;
   };
 
   const handleSend = async (customInput = null) => {
@@ -77,7 +176,7 @@ const Chatbot = () => {
     }]);
 
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const baseUrl = 'https://my-images-python-backend.onrender.com';
       const response = await fetch(`${baseUrl}/chat-portfolio`, {
         method: 'POST',
         headers: {
@@ -101,52 +200,67 @@ const Chatbot = () => {
       let botHighlights = [];
       let botCitations = [];
       let botSuggestions = [];
+      let lineBuffer = '';
+
+      const processLine = (line) => {
+        const trimmedLine = line.trim();
+        if (!trimmedLine || !trimmedLine.startsWith('data: ')) return;
+
+        const data = trimmedLine.slice(6).trim();
+        if (data === '[DONE]') return;
+
+        try {
+          const parsed = JSON.parse(data);
+
+          // Handle structured response or partial string chunks
+          if (parsed.answer !== undefined) botAnswer = parsed.answer;
+          else if (typeof parsed === 'string') botAnswer += parsed;
+
+          if (parsed.highlights) botHighlights = parsed.highlights;
+          if (parsed.citations) botCitations = parsed.citations;
+          if (parsed.suggested_questions) botSuggestions = parsed.suggested_questions;
+
+          setMessages(prev => {
+            const newMessages = [...prev];
+            newMessages[newMessages.length - 1] = {
+              role: 'bot',
+              text: botAnswer,
+              highlights: botHighlights,
+              citations: botCitations,
+              suggested_questions: botSuggestions
+            };
+            return newMessages;
+          });
+        } catch (e) {
+          // Fallback if data is not valid JSON
+          botAnswer += data;
+          setMessages(prev => {
+            const newMessages = [...prev];
+            newMessages[newMessages.length - 1] = {
+              role: 'bot',
+              text: botAnswer,
+              highlights: botHighlights,
+              citations: botCitations,
+              suggested_questions: botSuggestions
+            };
+            return newMessages;
+          });
+        }
+      };
 
       while (true) {
         const { value, done } = await reader.read();
-        if (done) break;
+        if (done) {
+          if (lineBuffer) processLine(lineBuffer);
+          break;
+        }
 
-        const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
+        lineBuffer += decoder.decode(value, { stream: true });
+        const lines = lineBuffer.split('\n');
+        lineBuffer = lines.pop(); // Keep the partial line
 
         for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6);
-            if (data === '[DONE]') break;
-
-            try {
-              const parsed = JSON.parse(data);
-
-              // Handle structured response
-              if (parsed.answer !== undefined) botAnswer = parsed.answer;
-              else if (typeof parsed === 'string') botAnswer += parsed;
-
-              if (parsed.highlights) botHighlights = parsed.highlights;
-              if (parsed.citations) botCitations = parsed.citations;
-              if (parsed.suggested_questions) botSuggestions = parsed.suggested_questions;
-
-              // Update the last message
-              setMessages(prev => {
-                const newMessages = [...prev];
-                newMessages[newMessages.length - 1] = {
-                  role: 'bot',
-                  text: botAnswer,
-                  highlights: botHighlights,
-                  citations: botCitations,
-                  suggested_questions: botSuggestions
-                };
-                return newMessages;
-              });
-            } catch (e) {
-              // If it's not JSON, it might be a raw string chunk
-              botAnswer += data;
-              setMessages(prev => {
-                const newMessages = [...prev];
-                newMessages[newMessages.length - 1] = { ...newMessages[newMessages.length - 1], text: botAnswer };
-                return newMessages;
-              });
-            }
-          }
+          processLine(line);
         }
       }
     } catch (error) {
@@ -191,16 +305,57 @@ const Chatbot = () => {
                     <div className="message-highlights">
                       <div className="section-label">Highlights</div>
                       <ul>
-                        {msg.highlights.map((h, idx) => <li key={idx}>{h}</li>)}
+                        {msg.highlights.map((h, idx) => (
+                          <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                            <span style={{ color: 'var(--accent)', fontWeight: 'bold', fontSize: '0.9rem', lineHeight: '1.2' }}>✓</span>
+                            <span>{h}</span>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   )}
 
                   {msg.role === 'bot' && msg.citations?.length > 0 && (
                     <div className="message-citations">
-                      {msg.citations.map((c, idx) => (
-                        <span key={idx} className="citation-tag">Source {c.page}</span>
-                      ))}
+                      <div className="section-label" style={{ width: '100%', marginBottom: '4px' }}>Sources & Citations</div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', width: '100%' }}>
+                        {msg.citations.map((c, idx) => {
+                          if (typeof c === 'string') {
+                            return (
+                              <span key={idx} className="citation-tag">
+                                🔗 {c}
+                              </span>
+                            );
+                          }
+                          const pageText = c.page ? ` (Page ${c.page})` : '';
+                          const text = `${c.source || c.title || 'Source'}${pageText}`;
+                          if (c.url) {
+                            return (
+                              <a 
+                                key={idx} 
+                                href={c.url} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="citation-tag clickable"
+                                title={c.snippet || c.content || text}
+                                style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                              >
+                                🔗 {text}
+                              </a>
+                            );
+                          }
+                          return (
+                            <span 
+                              key={idx} 
+                              className="citation-tag"
+                              title={c.snippet || c.content || text}
+                              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                            >
+                              📄 {text}
+                            </span>
+                          );
+                        })}
+                      </div>
                     </div>
                   )}
                 </div>

@@ -1610,6 +1610,17 @@ section {
     color: var(--text-dim);
 }
 
+.citation-tag.clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.citation-tag.clickable:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
 .message.user {
     align-self: flex-end;
     background: var(--accent);
