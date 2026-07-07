@@ -63,14 +63,14 @@ const Chatbot = () => {
         }
         if (part.startsWith('`') && part.endsWith('`')) {
           return (
-            <code 
-              key={idx} 
-              style={{ 
-                fontFamily: 'var(--font-mono)', 
-                fontSize: '0.8em', 
-                background: 'var(--bg-raised)', 
-                padding: '2px 5px', 
-                borderRadius: '4px', 
+            <code
+              key={idx}
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.8em',
+                background: 'var(--bg-raised)',
+                padding: '2px 5px',
+                borderRadius: '4px',
                 border: '1px solid var(--divider)',
                 color: 'var(--accent)'
               }}
@@ -117,12 +117,12 @@ const Chatbot = () => {
         flushList(i);
         const content = formatInline(trimmed.substring(1).trim());
         elements.push(
-          <blockquote 
-            key={i} 
-            style={{ 
-              borderLeft: '3px solid var(--accent)', 
-              paddingLeft: '10px', 
-              margin: '8px 0', 
+          <blockquote
+            key={i}
+            style={{
+              borderLeft: '3px solid var(--accent)',
+              paddingLeft: '10px',
+              margin: '8px 0',
               color: 'var(--text-secondary)',
               fontStyle: 'italic'
             }}
@@ -176,7 +176,7 @@ const Chatbot = () => {
     }]);
 
     try {
-      const baseUrl = 'https://my-images-python-backend.onrender.com';
+      const baseUrl = 'https://resumemaker-service.corstack.in/';
       const response = await fetch(`${baseUrl}/chat-portfolio`, {
         method: 'POST',
         headers: {
@@ -331,11 +331,11 @@ const Chatbot = () => {
                           const text = `${c.source || c.title || 'Source'}${pageText}`;
                           if (c.url) {
                             return (
-                              <a 
-                                key={idx} 
-                                href={c.url} 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
+                              <a
+                                key={idx}
+                                href={c.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="citation-tag clickable"
                                 title={c.snippet || c.content || text}
                                 style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
@@ -345,8 +345,8 @@ const Chatbot = () => {
                             );
                           }
                           return (
-                            <span 
-                              key={idx} 
+                            <span
+                              key={idx}
                               className="citation-tag"
                               title={c.snippet || c.content || text}
                               style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}

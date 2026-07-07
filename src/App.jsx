@@ -16,213 +16,368 @@ function App() {
   return (
     <div className="pf">
       <div className="nav">
-        <a href="#home" className="logo">SUMIT <span>HATEKAR</span></a>
-        <div className="nav-links">
-          <a href="#projects" className="nav-link">Projects</a>
-          <a href="#skills" className="nav-link">Skills</a>
-          <a href="#education" className="nav-link">Education</a>
-          <a href="#contact" className="nav-cta">Contact</a>
+        <div className="wrap" style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}}>
+          <a href="#home" className="logo">SUMIT <span>HATEKAR</span></a>
+          <div className="nav-links">
+            <a href="#projects" className="nav-link">Projects</a>
+            <a href="#skills" className="nav-link">Skills</a>
+            <a href="#education" className="nav-link">Education</a>
+            <a href="#contact" className="nav-cta">Contact</a>
+          </div>
         </div>
       </div>
 
       <div className="hero" id="home">
-        <div className="hero-tag"><div className="hero-dot"></div>Full Stack Developer · Pune, India</div>
-        <div className="hero-title">SUMIT<br /><span className="light">HATEKAR</span></div>
-        <div className="hero-sub">Building scalable enterprise systems and performance-focused web architectures. Java / Spring Boot · React · WebGL.</div>
-        <div className="hero-btns">
-          <a href="#projects" className="btn-dark">View Projects</a>
-          <a href="#contact" className="btn-outline">Get In Touch</a>
-        </div>
-        <div className="hero-chips">
-          <div className="chip">Backend Architecture</div>
-          <div className="chip">Full Stack Delivery</div>
-          <div className="chip">Enterprise Systems</div>
-          <div className="chip">WebGL / Canvas</div>
+        <div className="wrap">
+          <div className="hero-grid">
+            <div className="hero-content">
+              <div className="hero-tag">
+                <span className="hero-dot-active"></span>
+                Full Stack Developer · Pune, India
+              </div>
+              <h1 className="hero-title-new">
+                SUMIT <span className="accent-gradient">HATEKAR</span>
+              </h1>
+              <p className="hero-tagline">
+                Backend-focused Software Engineer specializing in scalable web applications using Java and Spring Boot.
+              </p>
+              
+              <div className="profile-summary-card">
+                <div className="summary-title">Profile Summary</div>
+                <p className="summary-text">
+                  Experienced in designing secure REST APIs with Spring Security (JWT, OAuth2, Rate Limiting). Proficient in database design, query optimization, and Redis caching. Skilled in cloud storage integrations (MinIO), asynchronous messaging, and deployment automation with GitHub Actions.
+                </p>
+              </div>
+
+              <div className="hero-btns-new">
+                <a href="#projects" className="btn-dark-new">View Projects</a>
+                <a href="#contact" className="btn-outline-new">Get In Touch</a>
+              </div>
+            </div>
+
+            <div className="hero-visual">
+              <div className="ide-window">
+                <div className="ide-header">
+                  <div className="ide-dots">
+                    <span className="dot red"></span>
+                    <span className="dot yellow"></span>
+                    <span className="dot green"></span>
+                  </div>
+                  <div className="ide-title">PortfolioController.java</div>
+                </div>
+                <div className="ide-body">
+                  <pre>
+                    <code>
+                      <span className="code-annotation">@RestController</span>{"\n"}
+                      <span className="code-annotation">@RequestMapping</span>(<span className="code-string">"/api/v1/dev"</span>){"\n"}
+                      <span className="code-keyword">public class</span> <span className="code-class">PortfolioController</span> &#123;{"\n\n"}
+                      {"    "}<span className="code-annotation">@GetMapping</span>(<span className="code-string">"/sumit"</span>){"\n"}
+                      {"    "}<span className="code-keyword">public</span> <span className="code-type">ResponseEntity</span>&lt;<span className="code-type">DevProfile</span>&gt; getProfile() &#123;{"\n"}
+                      {"        "}<span className="code-keyword">return</span> <span className="code-type">ResponseEntity</span>.ok({"\n"}
+                      {"            "}<span className="code-type">DevProfile</span>.builder(){"\n"}
+                      {"                "}.name(<span className="code-string">"Sumit Hatekar"</span>){"\n"}
+                      {"                "}.role(<span className="code-string">"Full Stack Dev"</span>){"\n"}
+                      {"                "}.specialization(<span className="code-string">"Spring Boot & AWS"</span>){"\n"}
+                      {"                "}.gpa(<span className="code-number" style={{color:'#f97316'}}>9.23</span>) <span className="code-comment">// SPPU First Year</span>{"\n"}
+                      {"                "}.skills(<span className="code-type">List</span>.of({"\n"}
+                      {"                    "}<span className="code-string">"Java"</span>, <span className="code-string">"PostgreSQL"</span>,{"\n"}
+                      {"                    "}<span className="code-string">"Redis"</span>, <span className="code-string">"Docker"</span>, <span className="code-string">"React"</span>{"\n"}
+                      {"                "})){"\n"}
+                      {"                "}.build(){"\n"}
+                      {"        "});{"\n"}
+                      {"    "}&#125;{"\n"}
+                      &#125;
+                    </code>
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="section" id="projects">
-        <div className="section-label">Showcase</div>
-        <div className="section-title">Featured <span>Projects</span></div>
+        <div className="wrap">
+          <div className="section-label">Showcase</div>
+          <div className="section-title">Featured <span>Projects</span></div>
 
-        <div className="proj-grid">
-          
-          <div className="proj-card">
-            <div className="proj-thumb">
-              <video src="/videos/resume-maker.mp4#t=30" autoPlay muted loop playsInline />
-            </div>
-            <div className="proj-body">
-              <div className="proj-tech">React · PixiJS · Spring Boot · Java</div>
-              <div className="proj-name">ResumeMaker Pro</div>
-              <div className="proj-desc">A GPU-accelerated resume platform using PixiJS for precision and Spring Boot for industrial backends. Solves the conflict between design freedom and document integrity.</div>
-              <div className="proj-links">
-                <a href="https://resume-maker-pro.netlify.app" target="_blank" rel="noopener noreferrer" className="proj-btn">Live Link</a>
+          <div className="proj-list">
+            {/* UEMS */}
+            <div className="proj-h-card">
+              <div className="proj-h-video">
+                <video src="/videos/uems exam management.mp4" autoPlay muted loop playsInline />
               </div>
-            </div>
-          </div>
-
-          <div className="proj-card">
-            <div className="proj-thumb">
-              <video src="/videos/Screen Recording 2026-01-24 122721.mp4#t=30" autoPlay muted loop playsInline />
-            </div>
-            <div className="proj-body">
-              <div className="proj-tech">Python · FastAPI · PyMuPDF · React</div>
-              <div className="proj-name">PDF Editor App</div>
-              <div className="proj-desc">Advanced engine deconstructing PDFs into structured JSON for manipulation and 100% fidelity regeneration. Bridges the gap between static docs and editable data.</div>
-              <div className="proj-links">
-                <a href="https://pdf-editor-1-ehhh.onrender.com" target="_blank" rel="noopener noreferrer" className="proj-btn">Live Link</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="proj-card">
-            <div className="proj-thumb">
-              <div style={{display:'flex', height:'100%', width: '100%'}}>
-                <div className="mrb-sidebar">
-                  <div style={{height:'8px',background:'rgba(255,255,255,0.3)',borderRadius:'3px',width:'80%',marginBottom:'10px'}}></div>
-                  <div className="mrb-s-item active"></div>
-                  <div className="mrb-s-item" style={{width:'60%'}}></div>
-                  <div className="mrb-s-item" style={{width:'75%'}}></div>
-                  <div className="mrb-s-item" style={{width:'50%'}}></div>
-                  <div className="mrb-s-item" style={{width:'65%'}}></div>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Full Stack Developer</span>
+                  <span className="proj-badge year">2025 – 2026</span>
+                  <span className="proj-badge type">OJT · Team Project</span>
                 </div>
-                <div className="mrb-content">
-                  <div className="mrb-stat"><div className="mrb-stat-label">Total Students</div><div className="mrb-stat-val">400</div></div>
-                  <div style={{background:'white',borderRadius:'4px',padding:'8px',display:'flex',alignItems:'flex-end',gap:'3px',height:'50px'}}>
-                    <div style={{flex:1,background:'#BFDBFE',height:'60%',borderRadius:'1px'}}></div>
-                    <div style={{flex:1,background:'#BFDBFE',height:'30%',borderRadius:'1px'}}></div>
-                    <div style={{flex:1,background:'#3B82F6',height:'80%',borderRadius:'1px'}}></div>
-                    <div style={{flex:1,background:'#BFDBFE',height:'45%',borderRadius:'1px'}}></div>
-                    <div style={{flex:1,background:'#3B82F6',height:'95%',borderRadius:'1px'}}></div>
-                  </div>
+                <div className="proj-tech">Spring Boot · React · PostgreSQL · Redis · Docker · AWS</div>
+                <div className="proj-name">Unified Examination Management Portal</div>
+                <div className="proj-subtitle">uems.corstack.in</div>
+                <div className="proj-desc">Designed and developed a secure, multi-region unified examination management backend. Built end-to-end from exam creation to result processing, deployed on AWS with Docker and automated CI/CD.</div>
+                <ul className="proj-highlights">
+                  <li>Designed secure multi-region backend using Spring Boot with RESTful APIs for Schools, Students, Exams & Results</li>
+                  <li>Integrated Redis caching to optimize queries and reduce database load for repetitive lookups</li>
+                  <li>Configured AWS RDS (PostgreSQL) and MinIO/S3 for secure, automated document uploads</li>
+                  <li>Built React UI components and connected them to the Spring Boot REST backend using Axios</li>
+                  <li>Deployed on AWS EC2 via Docker, routed via Cloudflare & Nginx Proxy Manager with GitHub Actions CI/CD</li>
+                </ul>
+                <div className="proj-links">
+                  <a href="https://uems.corstack.in" target="_blank" rel="noopener noreferrer" className="proj-btn-new">Live Demo <i className="ti ti-arrow-up-right"></i></a>
                 </div>
               </div>
             </div>
-            <div className="proj-body">
-              <div className="proj-tech">React · Spring Boot · PostgreSQL</div>
-              <div className="proj-name">MRB Exam Management</div>
-              <div className="proj-desc">Enterprise-grade examination platform designed for massive scalability and data security, handling thousands of concurrent sessions for academic institutions.</div>
-              <div className="proj-links"></div>
-            </div>
-          </div>
 
-          <div className="proj-card">
-            <div className="proj-thumb">
-               <video src="/videos/webgl-canvas-coustom implementation.mp4#t=30" autoPlay muted loop playsInline />
+            {/* ResumeMaker Pro */}
+            <div className="proj-h-card">
+              <div className="proj-h-video">
+                <video src="/videos/resume-maker.mp4" autoPlay muted loop playsInline />
+              </div>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Full Stack Developer</span>
+                  <span className="proj-badge year">Sep 2025 – Dec 2025</span>
+                  <span className="proj-badge type">Personal Project</span>
+                </div>
+                <div className="proj-tech">Spring Boot · React · Groq AI · RabbitMQ · Docker · AWS · JWT</div>
+                <div className="proj-name">ResumeMaker Pro</div>
+                <div className="proj-subtitle">resumemaker.corstack.in</div>
+                <div className="proj-desc">Spring Boot backend for AI-powered resume creation, management, and optimization. Built secure authentication flows, integrated Groq AI for real-time content enhancement, and deployed with Docker on AWS.</div>
+                <ul className="proj-highlights">
+                  <li>Built secure auth using Spring Security, JWT (Access/Refresh Tokens), and API Rate Limiting</li>
+                  <li>Integrated Groq AI service for real-time content enhancement and professional phrasing suggestions</li>
+                  <li>Developed a PDF parsing and extraction service to extract layout data and map to resume DTOs</li>
+                  <li>Configured an asynchronous notification flow using RabbitMQ, AWS EventBridge, and Brevo API</li>
+                  <li>Designed relational database schemas with JPA to manage nested resume details deployed on AWS RDS</li>
+                  <li>Built a React and PixiJS frontend, hosted on AWS EC2 via Docker, routed via Cloudflare & Nginx Proxy Manager</li>
+                </ul>
+                <div className="proj-links">
+                  <a href="https://resumemaker.corstack.in" target="_blank" rel="noopener noreferrer" className="proj-btn-new">Live Demo <i className="ti ti-arrow-up-right"></i></a>
+                </div>
+              </div>
             </div>
-            <div className="proj-body">
-              <div className="proj-tech">PixiJS · Web Workers · Canvas API</div>
-              <div className="proj-name">DOM-WebGL Engine</div>
-              <div className="proj-desc">High-performance scene-graph managing thousands of concurrent nodes with millisecond updates and complex spatial calculations in the browser.</div>
-              <div className="proj-links">
-                <a href="https://github.com/sumit1456/webgl" target="_blank" rel="noopener noreferrer" className="proj-btn ghost">View Source</a>
+
+            {/* Code Search Engine */}
+            <div className="proj-h-card">
+              <div className="proj-h-video">
+                <video src="/videos/codesearchengine.mp4" autoPlay muted loop playsInline />
+              </div>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Creator & Developer</span>
+                  <span className="proj-badge year">2025 – Present</span>
+                  <span className="proj-badge type">Open Source</span>
+                </div>
+                <div className="proj-tech">Python · FastAPI · MCP · Tree-sitter · SQLite · Ripgrep</div>
+                <div className="proj-name">Code Search Engine</div>
+                <div className="proj-subtitle">Local-first developer tool for humans and AI</div>
+                <div className="proj-desc">A local-first intelligent repository engine combining FastAPI backend, MCP server, and web UI. Features ripgrep-powered search, semantic embeddings, AST extraction, call graphs, and safe code editing.</div>
+                <ul className="proj-highlights">
+                  <li>Ripgrep-powered code search with semantic embeddings via BAAI/bge-small-en-v1.5</li>
+                  <li>AST extraction for functions, classes and signatures via tree-sitter</li>
+                  <li>Call graph analysis — callers, callees, impact analysis, execution tracing</li>
+                  <li>MCP Server with 15+ tools for AI agents (Claude, OpenCode, Cursor)</li>
+                </ul>
+                <div className="proj-links">
+                  <a href="https://github.com/sumit1456/CodeSearchEngine" target="_blank" rel="noopener noreferrer" className="proj-btn-new">GitHub <i className="ti ti-brand-github"></i></a>
+                </div>
               </div>
             </div>
           </div>
 
-        </div>
+          {/* Other Projects */}
+          <div className="other-proj-header">
+            <div className="section-label" style={{marginBottom: 0}}>Other Work</div>
+            <p className="other-proj-sub">Team projects & collaborative work — no public demos available</p>
+          </div>
+          <div className="other-proj-grid">
+            <div className="other-proj-card">
+              <div className="other-proj-icon">🗃️</div>
+              <div>
+                <div className="other-proj-tech">Spring Boot · JPA Specifications · PostgreSQL · REST API</div>
+                <div className="other-proj-name">Deadstock Inventory System</div>
+                <div className="other-proj-desc">Built a Spring Boot backend to manage, track, and audit institution-wide assets. Developed paginated REST APIs using JPA Specifications for efficient searching. Collaborated with frontend team to integrate APIs and optimize PostgreSQL operations.</div>
+                <div className="other-proj-meta">Institutional Commission · Team Project · 2025 – Present</div>
+              </div>
+            </div>
+            <div className="other-proj-card other-proj-placeholder">
+              <div className="other-proj-icon">🚧</div>
+              <div>
+                <div className="other-proj-name">More Coming Soon</div>
+                <div className="other-proj-desc">Building more backend microservices. They'll appear here as they're ready.</div>
+              </div>
+            </div>
+          </div>
+        </div>{/* end .wrap */}
       </div>
 
       <div className="skills-section" id="skills">
-        <div className="section-label">Capabilities</div>
-        <div className="section-title">Technical <span>Ecosystem</span></div>
-        <div className="skills-grid">
-          <div className="skill-row">
-            <div className="skill-cat">Programming Languages</div>
-            <div className="skill-tags">
-              <div className="s-tag">Java</div><div className="s-tag">Python</div><div className="s-tag">JavaScript</div><div className="s-tag">SQL</div>
+        <div className="wrap">
+          <div className="section-label">Capabilities</div>
+          <div className="section-title">Technical <span>Ecosystem</span></div>
+          <div className="skills-grid-new">
+            
+            <div className="skill-card-new">
+              <div className="skill-card-header">
+                <i className="ti ti-code-circle skill-icon"></i>
+                <div className="skill-card-title">Languages</div>
+              </div>
+              <div className="skill-card-tags">
+                <span className="s-tag-new">Java (Core & Advanced)</span>
+                <span className="s-tag-new">SQL</span>
+                <span className="s-tag-new">JavaScript (ES6+)</span>
+                <span className="s-tag-new">HTML5 / CSS3</span>
+                <span className="s-tag-new">Python</span>
+              </div>
             </div>
-          </div>
-          <div className="skill-row">
-            <div className="skill-cat">Systems & Backend</div>
-            <div className="skill-tags">
-              <div className="s-tag">Spring Boot</div><div className="s-tag">Spring Security (JWT)</div><div className="s-tag">RESTful APIs</div><div className="s-tag">System Design</div><div className="s-tag">DSA</div><div className="s-tag">RBAC</div>
+
+            <div className="skill-card-new">
+              <div className="skill-card-header">
+                <i className="ti ti-layers-intersect skill-icon"></i>
+                <div className="skill-card-title">Frameworks & Libraries</div>
+              </div>
+              <div className="skill-card-tags">
+                <span className="s-tag-new">Spring Boot</span>
+                <span className="s-tag-new">Spring Security</span>
+                <span className="s-tag-new">Spring Data JPA</span>
+                <span className="s-tag-new">Hibernate</span>
+                <span className="s-tag-new">React</span>
+                <span className="s-tag-new">Redux</span>
+              </div>
             </div>
-          </div>
-          <div className="skill-row">
-            <div className="skill-cat">Interface & Rendering</div>
-            <div className="skill-tags">
-              <div className="s-tag">React</div><div className="s-tag">Redux</div><div className="s-tag">PixiJS (WebGL)</div><div className="s-tag">Canvas API</div><div className="s-tag">Responsive UI</div>
+
+            <div className="skill-card-new">
+              <div className="skill-card-header">
+                <i className="ti ti-cloud-computing skill-icon"></i>
+                <div className="skill-card-title">Cloud & DevOps</div>
+              </div>
+              <div className="skill-card-tags">
+                <span className="s-tag-new">AWS (EC2, S3, RDS, EventBridge)</span>
+                <span className="s-tag-new">Docker</span>
+                <span className="s-tag-new">Git</span>
+                <span className="s-tag-new">GitHub Actions</span>
+                <span className="s-tag-new">MinIO Object Storage</span>
+                <span className="s-tag-new">CI/CD</span>
+              </div>
             </div>
-          </div>
-          <div className="skill-row">
-            <div className="skill-cat">Data Persistence</div>
-            <div className="skill-tags">
-              <div className="s-tag">PostgreSQL</div><div className="s-tag">MySQL</div><div className="s-tag">Hibernate</div><div className="s-tag">Spring Data JPA</div>
+
+            <div className="skill-card-new">
+              <div className="skill-card-header">
+                <i className="ti ti-database skill-icon"></i>
+                <div className="skill-card-title">Databases & Caching</div>
+              </div>
+              <div className="skill-card-tags">
+                <span className="s-tag-new">PostgreSQL</span>
+                <span className="s-tag-new">Oracle SQL</span>
+                <span className="s-tag-new">Redis Cache</span>
+                <span className="s-tag-new">Database Indexing</span>
+                <span className="s-tag-new">Query Optimization</span>
+              </div>
             </div>
-          </div>
-          <div className="skill-row">
-            <div className="skill-cat">Infrastructure & Tools</div>
-            <div className="skill-tags">
-              <div className="s-tag">AWS</div><div className="s-tag">Docker</div><div className="s-tag">CI/CD</div><div className="s-tag">Git</div><div className="s-tag">GitHub</div><div className="s-tag">Netlify</div><div className="s-tag">Render</div><div className="s-tag">Antigravity</div>
+
+            <div className="skill-card-new">
+              <div className="skill-card-header">
+                <i className="ti ti-shield-lock skill-icon"></i>
+                <div className="skill-card-title">Architecture & Security</div>
+              </div>
+              <div className="skill-card-tags">
+                <span className="s-tag-new">RESTful API Design</span>
+                <span className="s-tag-new">OAuth2</span>
+                <span className="s-tag-new">JWT (Access/Refresh Tokens)</span>
+                <span className="s-tag-new">Rate Limiting</span>
+                <span className="s-tag-new">RabbitMQ</span>
+                <span className="s-tag-new">Maven</span>
+              </div>
             </div>
+
+            <div className="skill-card-new">
+              <div className="skill-card-header">
+                <i className="ti ti-cpu skill-icon"></i>
+                <div className="skill-card-title">Testing & AI Integrations</div>
+              </div>
+              <div className="skill-card-tags">
+                <span className="s-tag-new">Postman API Testing</span>
+                <span className="s-tag-new">Swagger Doc</span>
+                <span className="s-tag-new">LLM Integration (Groq AI)</span>
+                <span className="s-tag-new">PDF Data Extraction</span>
+              </div>
+            </div>
+
           </div>
-        </div>
+        </div>{/* end .wrap */}
       </div>
 
       <div className="edu-section" id="education">
-        <div className="section-label">Academic Foundation</div>
-        <div className="section-title">Credentials & <span>Expertise</span></div>
-        <div className="edu-grid">
-          <div className="edu-card">
-            <div className="edu-year">2025 – 2027 (Expected)</div>
-            <div className="edu-title">Master of Science in Computer Applications</div>
-            <div className="edu-org">Savitribai Phule Pune University</div>
-            <div className="edu-detail">Current academic performance: <span className="edu-grade">89.63%</span>. Focused on advanced software engineering, algorithm optimization, and complex system design.</div>
+        <div className="wrap">
+          <div className="section-label">Academic & Professional Foundation</div>
+          <div className="section-title">Credentials & <span>Certifications</span></div>
+          <div className="edu-grid">
+            <div className="edu-card">
+              <div className="edu-year">2025 – 2027 (Expected)</div>
+              <div className="edu-title">Master of Science in Computer Applications</div>
+              <div className="edu-org">Savitribai Phule Pune University</div>
+              <div className="edu-detail">Current First Year Performance: <span className="edu-grade">9.23 GPA</span>. Focuses on advanced software engineering, distributed systems, and backend design patterns.</div>
+            </div>
+            <div className="edu-card">
+              <div className="edu-year">2024</div>
+              <div className="edu-title">Java Full Stack Development</div>
+              <div className="edu-org">QSpiders Wakad</div>
+              <div className="edu-detail">Professional training program. Developed industrial competencies in Core & Advanced Java, SQL, Hibernate, Spring Boot, React, and RESTful web services.</div>
+            </div>
+            <div className="edu-card">
+              <div className="edu-year">2021 – 2024</div>
+              <div className="edu-title">Bachelor of Science in Chemistry</div>
+              <div className="edu-org">Shivaji University</div>
+              <div className="edu-detail">Graduated with <span className="edu-grade">65%</span>. Gained analytical research methodologies, mathematical reasoning, and systematic troubleshooting workflows.</div>
+            </div>
           </div>
-          <div className="edu-card">
-            <div className="edu-year">2024</div>
-            <div className="edu-title">Java Full Stack Development</div>
-            <div className="edu-org">QSpiders Wakad</div>
-            <div className="edu-detail">Comprehensive professional certification covering the entire Spring Boot ecosystem, industrial-grade REST API security, and database normalization strategies.</div>
-          </div>
-          <div className="edu-card">
-            <div className="edu-year">2021 – 2024</div>
-            <div className="edu-title">Bachelor of Science in Chemistry</div>
-            <div className="edu-org">Shivaji University</div>
-            <div className="edu-detail">Graduated with <span className="edu-grade">65%</span>. Developed strong analytical thinking and experimental methodologies that now inform a data-driven approach to technical problem-solving.</div>
-          </div>
-        </div>
+        </div>{/* end .wrap */}
       </div>
 
       <div className="contact-section" id="contact">
-        <div className="section-label">Connection</div>
-        <div className="section-title">Get In <span>Touch</span></div>
-        <div className="contact-grid">
-          <div>
-            <div className="contact-lead">Let's build something extraordinary together.</div>
-            <div className="contact-sub">I am currently open to exciting new opportunities, interesting collaborations, or just a friendly chat about full-stack engineering and performance architectures.</div>
-            <div className="contact-links">
-              <a href="mailto:sumithatekar9@gmail.com" className="c-link">
-                <div className="c-icon"><i className="ti ti-mail" aria-hidden="true"></i></div>
-                <div><div className="c-info-label">Email</div><div className="c-info-val">sumithatekar9@gmail.com</div></div>
-              </a>
-              <a href="https://github.com/sumit1456" target="_blank" rel="noopener noreferrer" className="c-link">
-                <div className="c-icon"><i className="ti ti-brand-github" aria-hidden="true"></i></div>
-                <div><div className="c-info-label">GitHub</div><div className="c-info-val">github.com/sumit1456</div></div>
-              </a>
-              <a href="https://linkedin.com/in/sumit-hatekar123" target="_blank" rel="noopener noreferrer" className="c-link">
-                <div className="c-icon"><i className="ti ti-brand-linkedin" aria-hidden="true"></i></div>
-                <div><div className="c-info-label">LinkedIn</div><div className="c-info-val">in/sumit-hatekar123</div></div>
-              </a>
+        <div className="wrap">
+          <div className="section-label">Connection</div>
+          <div className="section-title">Get In <span>Touch</span></div>
+          <div className="contact-grid">
+            <div>
+              <div className="contact-lead">Let's build something extraordinary together.</div>
+              <div className="contact-sub">I am currently open to exciting backend/full-stack developer opportunities, interesting collaborations, or discussing robust systems and cloud architecture.</div>
+              <div className="contact-links">
+                <a href="mailto:sumithatekar9@gmail.com" className="c-link">
+                  <div className="c-icon"><i className="ti ti-mail" aria-hidden="true"></i></div>
+                  <div><div className="c-info-label">Email</div><div className="c-info-val">sumithatekar9@gmail.com</div></div>
+                </a>
+                <a href="https://github.com/sumit1456" target="_blank" rel="noopener noreferrer" className="c-link">
+                  <div className="c-icon"><i className="ti ti-brand-github" aria-hidden="true"></i></div>
+                  <div><div className="c-info-label">GitHub</div><div className="c-info-val">github.com/sumit1456</div></div>
+                </a>
+                <a href="https://linkedin.com/in/sumit-hatekar123" target="_blank" rel="noopener noreferrer" className="c-link">
+                  <div className="c-icon"><i className="ti ti-brand-linkedin" aria-hidden="true"></i></div>
+                  <div><div className="c-info-label">LinkedIn</div><div className="c-info-val">in/sumit-hatekar123</div></div>
+                </a>
+              </div>
             </div>
+            <form className="contact-form" onSubmit={handleContactSubmit}>
+              <div className="form-row">
+                <div><label className="form-label">Full Name</label><input name="name" className="form-inp" placeholder="John Doe" required /></div>
+                <div><label className="form-label">Subject</label><input name="subject" className="form-inp" placeholder="Project Inquiry" required /></div>
+              </div>
+              <div><label className="form-label">Message</label><textarea name="message" className="form-textarea" placeholder="Describe your vision..." required></textarea></div>
+              <button type="submit" className="form-submit">Transmit Message</button>
+            </form>
           </div>
-          <form className="contact-form" onSubmit={handleContactSubmit}>
-            <div className="form-row">
-              <div><label className="form-label">Full Name</label><input name="name" className="form-inp" placeholder="John Doe" required /></div>
-              <div><label className="form-label">Subject</label><input name="subject" className="form-inp" placeholder="Project Inquiry" required /></div>
-            </div>
-            <div><label className="form-label">Message</label><textarea name="message" className="form-textarea" placeholder="Describe your vision..." required></textarea></div>
-            <button type="submit" className="form-submit">Transmit Message</button>
-          </form>
-        </div>
+        </div>{/* end .wrap */}
       </div>
 
       <div className="footer">
-        <div className="footer-text">© 2026 Sumit Hatekar. Dedicated to systems that scale.</div>
-        <div className="footer-links">
-          <a href="https://github.com/sumit1456" target="_blank" rel="noopener noreferrer" className="f-link">GitHub</a>
-          <a href="https://linkedin.com/in/sumit-hatekar123" target="_blank" rel="noopener noreferrer" className="f-link">LinkedIn</a>
+        <div className="wrap" style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}}>
+          <div className="footer-text">© 2026 Sumit Hatekar. Dedicated to systems that scale.</div>
+          <div className="footer-links">
+            <a href="https://github.com/sumit1456" target="_blank" rel="noopener noreferrer" className="f-link">GitHub</a>
+            <a href="https://linkedin.com/in/sumit-hatekar123" target="_blank" rel="noopener noreferrer" className="f-link">LinkedIn</a>
+          </div>
         </div>
       </div>
 

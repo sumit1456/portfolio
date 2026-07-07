@@ -36,12 +36,7 @@ Dec 2025– Present
 • Regenerated PDFs from extracted JSON while preserving approximately 90–100% visual layout fidelity.
 • Replaced system and embedded fonts with Google Fonts during PDF regeneration.
 • Maintained consistent coordinate mapping between extracted data and regenerated output.
-DOM-WebGL Rendering Engine [Link]
-PixiJS (WebGL), Web Workers, Canvas API
-Nov 2025– Present
-• Developed a custom WebGL rendering engine for layout primitives, bounding boxes, and vector shapes.
-• Rendered complex scenes with 2,600+ scene-graph nodes per page while maintaining smooth interaction.
-• Implemented coordinate normalization and scene-graph management for accurate transformations.
+
 Education
 Master of Science in Computer Applications
 Savitribai Phule Pune University — First Semester: 89.63%
