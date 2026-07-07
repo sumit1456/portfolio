@@ -176,7 +176,7 @@ const Chatbot = () => {
     }]);
 
     try {
-      const baseUrl = 'https://resumemaker-service.corstack.in/';
+      const baseUrl = 'https://my-images-python-backend.onrender.com';
       const response = await fetch(`${baseUrl}/chat-portfolio`, {
         method: 'POST',
         headers: {

@@ -159,6 +159,34 @@ function App() {
               </div>
             </div>
 
+            {/* DF Editor App */}
+            <div className="proj-h-card">
+              <div className="proj-h-video">
+                <video src="/videos/pdf-editor.mp4" autoPlay muted loop playsInline />
+              </div>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Full Stack Developer</span>
+                  <span className="proj-badge year">Dec 2025 – Present</span>
+                  <span className="proj-badge type">Personal Project</span>
+                </div>
+                <div className="proj-tech">Python · FastAPI · PyMuPDF · React</div>
+                <div className="proj-name">DF Editor App — JSON-Based PDF Reconstruction</div>
+                <div className="proj-subtitle">pdf-editor-1-ehhh.onrender.com</div>
+                <div className="proj-desc">A PDF processing tool that extracts structured JSON from documents and regenerates PDFs with high visual fidelity. Features an AI chat panel for querying PDF content and an editing mode for modifying document structure.</div>
+                <ul className="proj-highlights">
+                  <li>Built a PDF extraction and regeneration backend using FastAPI and PyMuPDF for structured JSON processing</li>
+                  <li>Regenerated PDFs from extracted JSON while preserving approximately 90–100% visual layout fidelity</li>
+                  <li>Replaced system and embedded fonts with Google Fonts during PDF regeneration</li>
+                  <li>Maintained consistent coordinate mapping between extracted data and regenerated output</li>
+                  <li>Added an AI-powered chat panel for querying and conversing about PDF contents</li>
+                </ul>
+                <div className="proj-links">
+                  <a href="https://pdf-editor-1-ehhh.onrender.com" target="_blank" rel="noopener noreferrer" className="proj-btn-new">Live Demo <i className="ti ti-arrow-up-right"></i></a>
+                </div>
+              </div>
+            </div>
+
             {/* Code Search Engine */}
             <div className="proj-h-card">
               <div className="proj-h-video">
