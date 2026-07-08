@@ -1,8 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Chatbot from './components/Chatbot'
 import './index.css'
 
 function App() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view')
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    )
+
+    document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
   const handleContactSubmit = (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
@@ -31,31 +46,31 @@ function App() {
         <div className="wrap">
           <div className="hero-grid">
             <div className="hero-content">
-              <div className="hero-tag">
+              <div className="hero-tag fade-up">
                 <span className="hero-dot-active"></span>
                 Full Stack Developer · Pune, India
               </div>
-              <h1 className="hero-title-new">
+              <h1 className="hero-title-new fade-up fade-up-delay-1">
                 SUMIT <span className="accent-gradient">HATEKAR</span>
               </h1>
-              <p className="hero-tagline">
+              <p className="hero-tagline fade-up fade-up-delay-2">
                 Backend-focused Software Engineer specializing in scalable web applications using Java and Spring Boot.
               </p>
 
-              <div className="profile-summary-card">
+              <div className="profile-summary-card fade-up fade-up-delay-2">
                 <div className="summary-title">Profile Summary</div>
                 <p className="summary-text">
                   Experienced in designing secure REST APIs with Spring Security (JWT, OAuth2, Rate Limiting). Proficient in database design, query optimization, and Redis caching. Skilled in cloud storage integrations (MinIO), asynchronous messaging, and deployment automation with GitHub Actions.
                 </p>
               </div>
 
-              <div className="hero-btns-new">
+              <div className="hero-btns-new fade-up fade-up-delay-3">
                 <a href="#projects" className="btn-dark-new">View Projects</a>
                 <a href="#contact" className="btn-outline-new">Get In Touch</a>
               </div>
             </div>
 
-            <div className="hero-visual">
+            <div className="hero-visual fade-up fade-up-delay-2">
               <div className="ide-window">
                 <div className="ide-header">
                   <div className="ide-dots">
@@ -98,12 +113,12 @@ function App() {
 
       <div className="section" id="projects">
         <div className="wrap">
-          <div className="section-label">Showcase</div>
-          <div className="section-title">Featured <span>Projects</span></div>
+          <div className="section-label fade-up">Showcase</div>
+          <div className="section-title fade-up fade-up-delay-1">Featured <span>Projects</span></div>
 
           <div className="proj-list">
             {/* UEMS */}
-            <div className="proj-h-card">
+            <div className="proj-h-card fade-up">
               <div className="proj-h-video">
                 <video src="/videos/uems exam management.mp4" autoPlay muted loop playsInline />
               </div>
@@ -131,7 +146,7 @@ function App() {
             </div>
 
             {/* ResumeMaker Pro */}
-            <div className="proj-h-card">
+            <div className="proj-h-card fade-up">
               <div className="proj-h-video">
                 <video src="/videos/resume-maker.mp4" autoPlay muted loop playsInline />
               </div>
@@ -160,7 +175,7 @@ function App() {
             </div>
 
             {/* PDF Editor App */}
-            <div className="proj-h-card">
+            <div className="proj-h-card fade-up">
               <div className="proj-h-video">
                 <video src="/videos/pdf-editor.mp4" autoPlay muted loop playsInline />
               </div>
@@ -188,7 +203,7 @@ function App() {
             </div>
 
             {/* Code Search Engine */}
-            <div className="proj-h-card">
+            <div className="proj-h-card fade-up">
               <div className="proj-h-video">
                 <video src="/videos/codesearchengine.mp4" autoPlay muted loop playsInline />
               </div>
@@ -221,7 +236,7 @@ function App() {
             <p className="other-proj-sub">Team projects & collaborative work — no public demos available</p>
           </div>
           <div className="other-proj-grid">
-            <div className="other-proj-card">
+            <div className="other-proj-card fade-up">
               <div className="other-proj-icon">🗃️</div>
               <div>
                 <div className="other-proj-tech">Spring Boot · JPA Specifications · PostgreSQL · REST API</div>
@@ -230,7 +245,7 @@ function App() {
                 <div className="other-proj-meta">Institutional Commission · Team Project · 2025 – Present</div>
               </div>
             </div>
-            <div className="other-proj-card other-proj-placeholder">
+            <div className="other-proj-card other-proj-placeholder fade-up">
               <div className="other-proj-icon">🚧</div>
               <div>
                 <div className="other-proj-name">More Coming Soon</div>
@@ -243,11 +258,11 @@ function App() {
 
       <div className="skills-section" id="skills">
         <div className="wrap">
-          <div className="section-label">Capabilities</div>
-          <div className="section-title">Technical <span>Ecosystem</span></div>
+          <div className="section-label fade-up">Capabilities</div>
+          <div className="section-title fade-up fade-up-delay-1">Technical <span>Ecosystem</span></div>
           <div className="skills-grid-new">
 
-            <div className="skill-card-new">
+            <div className="skill-card-new fade-up">
               <div className="skill-card-header">
                 <i className="ti ti-code-circle skill-icon"></i>
                 <div className="skill-card-title">Languages</div>
@@ -261,7 +276,7 @@ function App() {
               </div>
             </div>
 
-            <div className="skill-card-new">
+            <div className="skill-card-new fade-up fade-up-delay-1">
               <div className="skill-card-header">
                 <i className="ti ti-layers-intersect skill-icon"></i>
                 <div className="skill-card-title">Frameworks & Libraries</div>
@@ -276,7 +291,7 @@ function App() {
               </div>
             </div>
 
-            <div className="skill-card-new">
+            <div className="skill-card-new fade-up fade-up-delay-2">
               <div className="skill-card-header">
                 <i className="ti ti-cloud-computing skill-icon"></i>
                 <div className="skill-card-title">Cloud & DevOps</div>
@@ -291,7 +306,7 @@ function App() {
               </div>
             </div>
 
-            <div className="skill-card-new">
+            <div className="skill-card-new fade-up fade-up-delay-1">
               <div className="skill-card-header">
                 <i className="ti ti-database skill-icon"></i>
                 <div className="skill-card-title">Databases & Caching</div>
@@ -305,7 +320,7 @@ function App() {
               </div>
             </div>
 
-            <div className="skill-card-new">
+            <div className="skill-card-new fade-up fade-up-delay-2">
               <div className="skill-card-header">
                 <i className="ti ti-shield-lock skill-icon"></i>
                 <div className="skill-card-title">Architecture & Security</div>
@@ -320,7 +335,7 @@ function App() {
               </div>
             </div>
 
-            <div className="skill-card-new">
+            <div className="skill-card-new fade-up fade-up-delay-3">
               <div className="skill-card-header">
                 <i className="ti ti-cpu skill-icon"></i>
                 <div className="skill-card-title">Testing & AI Integrations</div>
@@ -339,22 +354,22 @@ function App() {
 
       <div className="edu-section" id="education">
         <div className="wrap">
-          <div className="section-label">Academic & Professional Foundation</div>
-          <div className="section-title">Credentials & <span>Certifications</span></div>
+          <div className="section-label fade-up">Academic & Professional Foundation</div>
+          <div className="section-title fade-up fade-up-delay-1">Credentials & <span>Certifications</span></div>
           <div className="edu-grid">
-            <div className="edu-card">
+            <div className="edu-card fade-up">
               <div className="edu-year">2025 – 2027 (Expected)</div>
               <div className="edu-title">Master of Science in Computer Applications</div>
               <div className="edu-org">Savitribai Phule Pune University</div>
               <div className="edu-detail">Current First Year Performance: <span className="edu-grade">9.23 GPA</span>. Focuses on advanced software engineering, distributed systems, and backend design patterns.</div>
             </div>
-            <div className="edu-card">
+            <div className="edu-card fade-up fade-up-delay-1">
               <div className="edu-year">2024</div>
               <div className="edu-title">Java Full Stack Development</div>
               <div className="edu-org">QSpiders Wakad</div>
               <div className="edu-detail">Professional training program. Developed industrial competencies in Core & Advanced Java, SQL, Hibernate, Spring Boot, React, and RESTful web services.</div>
             </div>
-            <div className="edu-card">
+            <div className="edu-card fade-up fade-up-delay-2">
               <div className="edu-year">2021 – 2024</div>
               <div className="edu-title">Bachelor of Science in Chemistry</div>
               <div className="edu-org">Shivaji University</div>
@@ -366,10 +381,10 @@ function App() {
 
       <div className="contact-section" id="contact">
         <div className="wrap">
-          <div className="section-label">Connection</div>
-          <div className="section-title">Get In <span>Touch</span></div>
+          <div className="section-label fade-up">Connection</div>
+          <div className="section-title fade-up fade-up-delay-1">Get In <span>Touch</span></div>
           <div className="contact-grid">
-            <div>
+            <div className="fade-up fade-up-delay-2">
               <div className="contact-lead">Let's build something extraordinary together.</div>
               <div className="contact-sub">I am currently open to exciting backend/full-stack developer opportunities, interesting collaborations, or discussing robust systems and cloud architecture.</div>
               <div className="contact-links">
@@ -387,7 +402,7 @@ function App() {
                 </a>
               </div>
             </div>
-            <form className="contact-form" onSubmit={handleContactSubmit}>
+            <form className="contact-form fade-up fade-up-delay-3" onSubmit={handleContactSubmit}>
               <div className="form-row">
                 <div><label className="form-label">Full Name</label><input name="name" className="form-inp" placeholder="John Doe" required /></div>
                 <div><label className="form-label">Subject</label><input name="subject" className="form-inp" placeholder="Project Inquiry" required /></div>
