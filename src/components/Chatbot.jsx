@@ -24,13 +24,20 @@ const Chatbot = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
+
+  const isNearBottom = () => {
+    const container = messagesContainerRef.current;
+    if (!container) return true;
+    return container.scrollHeight - container.scrollTop - container.clientHeight < 150;
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && isNearBottom()) {
       scrollToBottom();
     }
   }, [messages, isOpen]);
@@ -177,6 +184,7 @@ const Chatbot = () => {
 
     try {
       const baseUrl = 'https://my-images-python-backend.onrender.com';
+      // const baseUrl = 'http://localhost:8000';
       const response = await fetch(`${baseUrl}/chat-portfolio`, {
         method: 'POST',
         headers: {
@@ -212,13 +220,22 @@ const Chatbot = () => {
         try {
           const parsed = JSON.parse(data);
 
-          // Handle structured response or partial string chunks
-          if (parsed.answer !== undefined) botAnswer = parsed.answer;
-          else if (typeof parsed === 'string') botAnswer += parsed;
-
-          if (parsed.highlights) botHighlights = parsed.highlights;
-          if (parsed.citations) botCitations = parsed.citations;
-          if (parsed.suggested_questions) botSuggestions = parsed.suggested_questions;
+          if (parsed.type === 'token') {
+            botAnswer += parsed.content;
+          } else if (parsed.type === 'result') {
+            botAnswer = parsed.data.answer || botAnswer;
+            botHighlights = parsed.data.highlights || [];
+            botCitations = parsed.data.citations || [];
+            botSuggestions = parsed.data.suggested_questions || [];
+          } else if (parsed.type === 'error') {
+            botAnswer = parsed.message || 'An error occurred.';
+          } else {
+            // Fallback for old format
+            if (parsed.answer !== undefined) botAnswer = parsed.answer;
+            if (parsed.highlights) botHighlights = parsed.highlights;
+            if (parsed.citations) botCitations = parsed.citations;
+            if (parsed.suggested_questions) botSuggestions = parsed.suggested_questions;
+          }
 
           setMessages(prev => {
             const newMessages = [...prev];
@@ -293,7 +310,7 @@ const Chatbot = () => {
             <button className="close-btn" onClick={() => setIsOpen(false)}>×</button>
           </div>
 
-          <div className="chatbot-messages">
+          <div className="chatbot-messages" ref={messagesContainerRef}>
             {messages.map((msg, i) => (
               <div key={i} className={`message-group ${msg.role}`}>
                 <div className={`message ${msg.role}`}>

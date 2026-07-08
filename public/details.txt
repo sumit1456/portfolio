@@ -1,54 +1,77 @@
 SUMIT HATEKAR
 Full Stack Developer
-Pune, India · sumithatekar9@gmail.com · +91 7387155502 · github.com/sumit1456 · linkedin.com/in/sumit-hatekar123
+Pune, India · sumithatekar9@gmail.com · github.com/sumit1456 · linkedin.com/in/sumit-hatekar123
+
 Profile Summary
-Full Stack Developer with experience building performance-focused web applications and document editing systems. Strong
-background in Java, JavaScript, and modern frontend frameworks, with hands-on experience in WebGL rendering and
-backend-driven PDF processing pipelines. Focused on layout accuracy, data transformation, and maintainable system
-design.
+Backend-focused Software Engineer specializing in scalable web applications using Java and Spring Boot. Experienced in designing secure REST APIs with Spring Security (JWT, OAuth2, Rate Limiting). Proficient in database design, query optimization, and Redis caching. Skilled in cloud storage integrations (MinIO), asynchronous messaging, and deployment automation with GitHub Actions.
+
 Technical Skills
-Languages: Java, JavaScript, TypeScript, SQL, HTML5, CSS3
-Backend & APIs: RESTful APIs, Authentication & Authorization (RBAC), DTO Mapping, Validation, Error Handling,
-Pagination, API Security Basics
-Frameworks & Libraries: Spring Boot, Spring Security (JWT basics), React, Redux, PixiJS (WebGL)
-Databases: PostgreSQL, MySQL, Oracle SQL, Hibernate, Spring Data JPA
-PDF&Graphics: ApachePDF,jsPDF,PyMuPDF,CanvasAPI,CoordinateSystems, Bounding Boxes, Layout Engines
-Tools: Git, GitHub, Docker, Maven, Postman, AWS, Netlify, Render
-Experience
-Full Stack Developer — Freelance / Client Project (Education Domain)
-•
-2025– Present
-Developed an end-to-end Exam Management System (MRB Exam Management) based on academic requirements.
-• Designed modules for exam creation, student management, hall ticket generation, and result processing.
-• Built frontend interfaces using React and backend APIs using Spring Boot for secure data handling.
+Languages: Java (Core & Advanced), SQL, JavaScript (ES6+), HTML5 / CSS3, Python
+Frameworks & Libraries: Spring Boot, Spring Security, Spring Data JPA, Hibernate, React, Redux
+Cloud & DevOps: AWS (EC2, S3, RDS, EventBridge), Docker, Git, GitHub Actions, MinIO Object Storage, CI/CD
+Databases & Caching: PostgreSQL, Oracle SQL, Redis Cache, Database Indexing, Query Optimization
+Architecture & Security: RESTful API Design, OAuth2, JWT (Access/Refresh Tokens), Rate Limiting, RabbitMQ, Maven
+Testing & AI Integrations: Postman API Testing, Swagger Doc, LLM Integration (Groq AI), PDF Data Extraction
+
 Projects
-ResumeMaker Pro — GPU-Accelerated Resume Editor [Link]
-React, PixiJS (WebGL), Spring Boot, Java (Apache PDF), jsPDF
-Sep 2025– Dec 2025
-• Built a browser-based resume editor using React and PixiJS to render layout guides and graphical elements.
-• Used a hybrid rendering approach combining WebGL graphics with DOM-based text to preserve ATS compatibility.
-• Implemented a Spring Boot backend for PDF generation using a Java PDF library.
-• Ensured exported PDFs remain searchable and visually consistent across different viewers.
-PDF Editor App — JSON-Based PDF Reconstruction [Link]
-Python, FastAPI, PyMuPDF, React
-Dec 2025– Present
-• Built a PDF processing backend using FastAPI and PyMuPDF to extract structured JSON from documents.
+Unified Examination Management Portal [uems.corstack.in]
+Spring Boot, React, PostgreSQL, Redis, Docker, AWS
+2025 – 2026 (OJT · Team Project)
+• Designed secure multi-region backend using Spring Boot with RESTful APIs for Schools, Students, Exams & Results.
+• Integrated Redis caching to optimize queries and reduce database load for repetitive lookups.
+• Configured AWS RDS (PostgreSQL) and MinIO/S3 for secure, automated document uploads.
+• Built React UI components and connected them to the Spring Boot REST backend using Axios.
+• Deployed on AWS EC2 via Docker, routed via Cloudflare & Nginx Proxy Manager with GitHub Actions CI/CD.
+
+ResumeMaker Pro — AI-powered Resume Editor [resumemaker.corstack.in]
+Spring Boot, React, Groq AI, RabbitMQ, Docker, AWS, JWT
+Sep 2025 – Dec 2025
+• Built secure auth using Spring Security, JWT (Access/Refresh Tokens), and API Rate Limiting.
+• Integrated Groq AI service for real-time content enhancement and professional phrasing suggestions.
+• Developed a PDF parsing and extraction service to extract layout data and map to resume DTOs.
+• Configured an asynchronous notification flow using RabbitMQ, AWS EventBridge, and Brevo API.
+• Designed relational database schemas with JPA to manage nested resume details deployed on AWS RDS.
+• Built a React and PixiJS frontend, hosted on AWS EC2 via Docker, routed via Cloudflare & Nginx Proxy Manager.
+
+DF Editor App — JSON-Based PDF Reconstruction [pdf-editor-1-ehhh.onrender.com]
+FastAPI, PyMuPDF, Python, React
+Dec 2025 – Present
+• Built a PDF extraction and regeneration backend using FastAPI and PyMuPDF for structured JSON processing.
 • Regenerated PDFs from extracted JSON while preserving approximately 90–100% visual layout fidelity.
 • Replaced system and embedded fonts with Google Fonts during PDF regeneration.
 • Maintained consistent coordinate mapping between extracted data and regenerated output.
+• Added an AI-powered chat panel for querying and conversing about PDF contents.
+
+Code Search Engine [github.com/sumit1456/CodeSearchEngine]
+Python, FastAPI, MCP, Tree-sitter, SQLite, Ripgrep
+2025 – Present
+• Ripgrep-powered code search with semantic embeddings via BAAI/bge-small-en-v1.5.
+• AST extraction for functions, classes and signatures via tree-sitter.
+• Call graph analysis — callers, callees, impact analysis, execution tracing.
+• MCP Server with 15+ tools for AI agents (Claude, OpenCode, Cursor).
+
+Deadstock Inventory System
+Spring Boot, JPA Specifications, PostgreSQL, REST API
+2025 – Present (Institutional Commission · Team Project)
+• Built a Spring Boot backend to manage, track, and audit institution-wide assets.
+• Developed paginated REST APIs using JPA Specifications for efficient searching.
+• Collaborated with frontend team to integrate APIs and optimize PostgreSQL operations.
 
 Education
 Master of Science in Computer Applications
-Savitribai Phule Pune University — First Semester: 89.63%
+Savitribai Phule Pune University
+2025 – 2027 (Expected)
+• Current First Year Performance: 9.23 GPA.
+• Focuses on advanced software engineering, distributed systems, and backend design patterns.
+
+Java Full Stack Development
+QSpiders Wakad
+2024
+• Professional training program.
+• Developed competencies in Core & Advanced Java, SQL, Hibernate, Spring Boot, React, and RESTful web services.
+
 Bachelor of Science in Chemistry
-Shivaji University — 65%
-Higher Secondary Certificate
-Yashwantrao Chavan Institute of Science, Satara — 84%
-Secondary School Certificate
-The Modern English School, Koregaon — 87%
-Certifications
-2025– 2027 (Expected)
-2021– 2024
-2019– 20212
-2018– 2019
-Java Full Stack Development — QSpiders Wakad (2024)
+Shivaji University
+2021 – 2024
+• Graduated with 65%.
+• Gained analytical research methodologies, mathematical reasoning, and systematic troubleshooting workflows.
