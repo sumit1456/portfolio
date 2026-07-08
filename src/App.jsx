@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="pf">
       <div className="nav">
-        <div className="wrap" style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}}>
+        <div className="wrap" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
           <a href="#home" className="logo">SUMIT <span>HATEKAR</span></a>
           <div className="nav-links">
             <a href="#projects" className="nav-link">Projects</a>
@@ -41,7 +41,7 @@ function App() {
               <p className="hero-tagline">
                 Backend-focused Software Engineer specializing in scalable web applications using Java and Spring Boot.
               </p>
-              
+
               <div className="profile-summary-card">
                 <div className="summary-title">Profile Summary</div>
                 <p className="summary-text">
@@ -78,7 +78,7 @@ function App() {
                       {"                "}.name(<span className="code-string">"Sumit Hatekar"</span>){"\n"}
                       {"                "}.role(<span className="code-string">"Full Stack Dev"</span>){"\n"}
                       {"                "}.specialization(<span className="code-string">"Spring Boot & AWS"</span>){"\n"}
-                      {"                "}.gpa(<span className="code-number" style={{color:'#f97316'}}>9.23</span>) <span className="code-comment">// SPPU First Year</span>{"\n"}
+                      {"                "}.gpa(<span className="code-number" style={{ color: '#f97316' }}>9.23</span>) <span className="code-comment">// SPPU First Year</span>{"\n"}
                       {"                "}.skills(<span className="code-type">List</span>.of({"\n"}
                       {"                    "}<span className="code-string">"Java"</span>, <span className="code-string">"PostgreSQL"</span>,{"\n"}
                       {"                    "}<span className="code-string">"Redis"</span>, <span className="code-string">"Docker"</span>, <span className="code-string">"React"</span>{"\n"}
@@ -159,7 +159,7 @@ function App() {
               </div>
             </div>
 
-            {/* DF Editor App */}
+            {/* PDF Editor App */}
             <div className="proj-h-card">
               <div className="proj-h-video">
                 <video src="/videos/pdf-editor.mp4" autoPlay muted loop playsInline />
@@ -171,7 +171,7 @@ function App() {
                   <span className="proj-badge type">Personal Project</span>
                 </div>
                 <div className="proj-tech">Python · FastAPI · PyMuPDF · React</div>
-                <div className="proj-name">DF Editor App — JSON-Based PDF Reconstruction</div>
+                <div className="proj-name">PDF Editor App — JSON-Based PDF Reconstruction</div>
                 <div className="proj-subtitle">pdf-editor-1-ehhh.onrender.com</div>
                 <div className="proj-desc">A PDF processing tool that extracts structured JSON from documents and regenerates PDFs with high visual fidelity. Features an AI chat panel for querying PDF content and an editing mode for modifying document structure.</div>
                 <ul className="proj-highlights">
@@ -217,7 +217,7 @@ function App() {
 
           {/* Other Projects */}
           <div className="other-proj-header">
-            <div className="section-label" style={{marginBottom: 0}}>Other Work</div>
+            <div className="section-label" style={{ marginBottom: 0 }}>Other Work</div>
             <p className="other-proj-sub">Team projects & collaborative work — no public demos available</p>
           </div>
           <div className="other-proj-grid">
@@ -246,7 +246,7 @@ function App() {
           <div className="section-label">Capabilities</div>
           <div className="section-title">Technical <span>Ecosystem</span></div>
           <div className="skills-grid-new">
-            
+
             <div className="skill-card-new">
               <div className="skill-card-header">
                 <i className="ti ti-code-circle skill-icon"></i>
@@ -400,7 +400,7 @@ function App() {
       </div>
 
       <div className="footer">
-        <div className="wrap" style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%'}}>
+        <div className="wrap" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
           <div className="footer-text">© 2026 Sumit Hatekar. Dedicated to systems that scale.</div>
           <div className="footer-links">
             <a href="https://github.com/sumit1456" target="_blank" rel="noopener noreferrer" className="f-link">GitHub</a>
