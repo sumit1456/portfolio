@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Chatbot from './components/Chatbot'
 import './index.css'
 
 function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -18,6 +20,9 @@ function App() {
     document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el))
     return () => observer.disconnect()
   }, [])
+
+  const closeMobileMenu = () => setMobileMenuOpen(false)
+
   const handleContactSubmit = (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
@@ -30,15 +35,37 @@ function App() {
 
   return (
     <div className="pf">
+      {/* ── Navbar ── */}
       <div className="nav">
         <div className="wrap" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
           <a href="#home" className="logo">SUMIT <span>HATEKAR</span></a>
+
+          {/* Desktop nav links */}
           <div className="nav-links">
             <a href="#projects" className="nav-link">Projects</a>
             <a href="#skills" className="nav-link">Skills</a>
             <a href="#education" className="nav-link">Education</a>
             <a href="#contact" className="nav-cta">Contact</a>
           </div>
+
+          {/* Hamburger button (mobile only) */}
+          <button
+            className={`nav-hamburger${mobileMenuOpen ? ' open' : ''}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
+        {/* Mobile dropdown menu */}
+        <div className={`nav-mobile-menu${mobileMenuOpen ? ' open' : ''}`}>
+          <a href="#projects" className="nav-mobile-link" onClick={closeMobileMenu}>Projects</a>
+          <a href="#skills" className="nav-mobile-link" onClick={closeMobileMenu}>Skills</a>
+          <a href="#education" className="nav-mobile-link" onClick={closeMobileMenu}>Education</a>
+          <a href="#contact" className="nav-mobile-link cta" onClick={closeMobileMenu}>Contact</a>
         </div>
       </div>
 
