@@ -243,14 +243,50 @@ const Chatbot = () => {
         })
       });
 
+      // ── HTTP error handling ────────────────────────────────────────────
+      if (!response.ok) {
+        let friendlyMessage = `The AI service returned an error (${response.status}).`;
+
+        try {
+          const errBody = await response.json();
+          const serverMsg = errBody?.message || errBody?.detail || errBody?.error?.message || '';
+
+          if (response.status === 429 || serverMsg.toLowerCase().includes('quota') || serverMsg.toLowerCase().includes('rate')) {
+            friendlyMessage = "⚠️ The AI is temporarily rate-limited (too many requests). Please wait a moment and try again.";
+          } else if (response.status === 503 || response.status === 502) {
+            friendlyMessage = "⚠️ The AI service is currently starting up (cold start). Please try again in 30–60 seconds.";
+          } else if (response.status >= 500) {
+            friendlyMessage = "⚠️ The AI service encountered an internal error. Please try again shortly.";
+          } else if (serverMsg) {
+            friendlyMessage = `⚠️ ${serverMsg}`;
+          }
+        } catch (_) {
+          // Could not parse error body — use the generic message
+        }
+
+        setMessages(prev => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = { role: 'bot', text: friendlyMessage };
+          return newMessages;
+        });
+        setIsStreaming(true);
+        return;
+      }
+      // ───────────────────────────────────────────────────────────────────
+
+
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
+
+      // rawTokens accumulates the full JSON string the LLM streams token-by-token
+      // We NEVER display this directly — we wait for the 'result' event
+      let rawTokenBuffer = '';
       let botAnswer = '';
       let botHighlights = [];
       let botCitations = [];
       let botSuggestions = [];
       let lineBuffer = '';
-      let hasReceivedContent = false;
+      let gotResult = false; // flips true only when a clean 'result' event arrives
 
       const processLine = (line) => {
         const trimmedLine = line.trim();
@@ -263,53 +299,60 @@ const Chatbot = () => {
           const parsed = JSON.parse(data);
 
           if (parsed.type === 'token') {
+            // Tokens form a raw JSON string — accumulate silently, never display
             if (typeof parsed.content === 'string') {
-              botAnswer += parsed.content;
+              rawTokenBuffer += parsed.content;
             }
+            // Keep typing indicator — do NOT flip isStreaming here
+            return;
+
           } else if (parsed.type === 'result') {
+            // ✅ Clean structured data from backend — safe to display
             if (parsed.data) {
-              botAnswer = parsed.data.answer || botAnswer;
+              botAnswer = parsed.data.answer || '';
               botHighlights = parsed.data.highlights || [];
               botCitations = parsed.data.citations || [];
               botSuggestions = parsed.data.suggested_questions || [];
             }
+            gotResult = true;
+
           } else if (parsed.type === 'error') {
             botAnswer = parsed.message || 'An error occurred.';
+            gotResult = true;
+
           } else {
-            // Fallback for direct format
+            // Fallback: direct JSON format (no 'type' field)
             if (parsed.answer !== undefined) botAnswer = parsed.answer;
             if (parsed.highlights) botHighlights = parsed.highlights;
             if (parsed.citations) botCitations = parsed.citations;
             if (parsed.suggested_questions) botSuggestions = parsed.suggested_questions;
+            gotResult = true;
           }
         } catch (e) {
-          // Ignore partial unparseable JSON stream data
+          // JSON parse failed — this is a raw text chunk (non-JSON backend)
+          // Only append if it looks like plain text, not a JSON fragment
           if (!data.startsWith('{') && !data.startsWith('[') && !data.includes('"answer"')) {
             botAnswer += data;
+            gotResult = true;
           }
+          // Otherwise silently ignore (it's a partial JSON fragment from token streaming)
         }
 
-        // Start a one-time 1.5s reveal timer on the very first token received
-        if (botAnswer.trim().length > 0 && !hasReceivedContent) {
-          hasReceivedContent = true;
-          streamingTimerRef.current = setTimeout(() => {
-            setIsStreaming(true);
-          }, 1500);
+        // Only update the visible message & flip to streaming when we have clean data
+        if (gotResult) {
+          setMessages(prev => {
+            const newMessages = [...prev];
+            newMessages[newMessages.length - 1] = {
+              role: 'bot',
+              text: botAnswer,
+              highlights: botHighlights,
+              citations: botCitations,
+              suggested_questions: botSuggestions
+            };
+            return newMessages;
+          });
+          setIsStreaming(true);
         }
-
-        // Always keep the message state updated in the background;
-        // the bubble won't render until isStreaming flips true
-        setMessages(prev => {
-          const newMessages = [...prev];
-          newMessages[newMessages.length - 1] = {
-            role: 'bot',
-            text: botAnswer,
-            highlights: botHighlights,
-            citations: botCitations,
-            suggested_questions: botSuggestions
-          };
-          return newMessages;
-        });
       };
 
       while (true) {
@@ -334,17 +377,14 @@ const Chatbot = () => {
         newMessages[newMessages.length - 1] = { role: 'bot', text: 'Error connecting to the AI service.' };
         return newMessages;
       });
+      setIsStreaming(true); // show error message
     } finally {
-      // Clear any pending reveal timer and show final result immediately
       if (streamingTimerRef.current) {
         clearTimeout(streamingTimerRef.current);
         streamingTimerRef.current = null;
       }
-      setIsStreaming(true);  // ensure bubble is visible with final content
-      setTimeout(() => {
-        setIsLoading(false);
-        setIsStreaming(false);
-      }, 50); // tiny tick so the final message renders before loading clears
+      setIsLoading(false);
+      setIsStreaming(false);
     }
   };
 
