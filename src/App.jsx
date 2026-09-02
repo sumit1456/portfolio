@@ -214,7 +214,7 @@ function App() {
                 </div>
                 <div className="proj-tech">Python · FastAPI · PyMuPDF · React</div>
                 <div className="proj-name">PDF Editor App — JSON-Based PDF Reconstruction</div>
-                <div className="proj-subtitle">pdf-editor-1-ehhh.onrender.com</div>
+                <div className="proj-subtitle">pdf-editor-1-tcb2.onrender.com</div>
                 <div className="proj-desc">A PDF processing tool that extracts structured JSON from documents and regenerates PDFs with high visual fidelity. Features an AI chat panel for querying PDF content and an editing mode for modifying document structure.</div>
                 <ul className="proj-highlights">
                   <li>Built a PDF extraction and regeneration backend using FastAPI and PyMuPDF for structured JSON processing</li>
@@ -224,7 +224,7 @@ function App() {
                   <li>Added an AI-powered chat panel for querying and conversing about PDF contents</li>
                 </ul>
                 <div className="proj-links">
-                  <a href="https://pdf-editor-1-ehhh.onrender.com" target="_blank" rel="noopener noreferrer" className="proj-btn-new">Live Demo <i className="ti ti-arrow-up-right"></i></a>
+                  <a href="https://pdf-editor-1-tcb2.onrender.com" target="_blank" rel="noopener noreferrer" className="proj-btn-new">Live Demo <i className="ti ti-arrow-up-right"></i></a>
                 </div>
               </div>
             </div>

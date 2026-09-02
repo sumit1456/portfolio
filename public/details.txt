@@ -33,7 +33,7 @@ Sep 2025 – Dec 2025
 • Designed relational database schemas with JPA to manage nested resume details deployed on AWS RDS.
 • Built a React and PixiJS frontend, hosted on AWS EC2 via Docker, routed via Cloudflare & Nginx Proxy Manager.
 
-DF Editor App — JSON-Based PDF Reconstruction [pdf-editor-1-ehhh.onrender.com]
+DF Editor App — JSON-Based PDF Reconstruction [pdf-editor-1-tcb2.onrender.com]
 FastAPI, PyMuPDF, Python, React
 Dec 2025 – Present
 • Built a PDF extraction and regeneration backend using FastAPI and PyMuPDF for structured JSON processing.

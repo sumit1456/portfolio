@@ -1,20 +1,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
+const INITIAL_MESSAGE = {
+  role: 'bot',
+  text: "Hi! I'm Sumit's AI assistant. Ask me about his experience, technical skills, portfolio projects, or background!",
+  highlights: [],
+  citations: [],
+  suggested_questions: [
+    "What are Sumit's core skills?",
+    "Tell me about his key projects",
+    "How can I contact Sumit?"
+  ]
+};
+
 const Chatbot = () => {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
 
   // Use TanStack Query to manage messages state persistently
-  const { data: messages = [
-    { role: 'bot', text: "Hi! I'm Sumit's AI assistant. How can I help you today?" }
-  ] } = useQuery({
+  const { data: messages = [INITIAL_MESSAGE] } = useQuery({
     queryKey: ['portfolio-chat'],
     queryFn: () => [], // Provide a simple dummy queryFn to satisfy TanStack Query v5
     enabled: false,
-    initialData: [
-      { role: 'bot', text: "Hi! I'm Sumit's AI assistant. How can I help you today?" }
-    ]
+    initialData: [INITIAL_MESSAGE]
   });
 
   const setMessages = (updater) => {
@@ -23,6 +31,8 @@ const Chatbot = () => {
 
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false); // true once reveal delay has passed
+  const streamingTimerRef = useRef(null); // delay timer before revealing bubble
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
 
@@ -41,6 +51,53 @@ const Chatbot = () => {
       scrollToBottom();
     }
   }, [messages, isOpen]);
+
+  const clearChat = () => {
+    setMessages([INITIAL_MESSAGE]);
+  };
+
+  // Helper to ensure raw JSON strings are never rendered directly to the user
+  const getRenderableBotMessage = (msg) => {
+    if (msg.role !== 'bot' || !msg.text) return msg;
+
+    let text = msg.text;
+    let highlights = msg.highlights || [];
+    let citations = msg.citations || [];
+    let suggested_questions = msg.suggested_questions || [];
+
+    const trimmed = text.trim();
+    if (trimmed.startsWith('{') && (trimmed.endsWith('}') || trimmed.includes('"answer"'))) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (parsed.answer || parsed.text || parsed.data?.answer) {
+          text = parsed.answer || parsed.text || parsed.data?.answer || '';
+          if (parsed.highlights || parsed.data?.highlights) {
+            highlights = parsed.highlights || parsed.data?.highlights || [];
+          }
+          if (parsed.citations || parsed.data?.citations) {
+            citations = parsed.citations || parsed.data?.citations || [];
+          }
+          if (parsed.suggested_questions || parsed.data?.suggested_questions) {
+            suggested_questions = parsed.suggested_questions || parsed.data?.suggested_questions || [];
+          }
+        }
+      } catch (e) {
+        // Extract partial answer string if JSON is streaming
+        const match = trimmed.match(/"answer"\s*:\s*"([^"]*)"?/);
+        if (match && match[1]) {
+          text = match[1];
+        }
+      }
+    }
+
+    return {
+      ...msg,
+      text,
+      highlights,
+      citations,
+      suggested_questions
+    };
+  };
 
   const formatText = (text) => {
     if (!text) return '';
@@ -66,21 +123,13 @@ const Chatbot = () => {
       const parts = str.split(tokenRegex);
       return parts.map((part, idx) => {
         if (part.startsWith('**') && part.endsWith('**')) {
-          return <strong key={idx} style={{ fontWeight: '600', color: 'var(--text-primary)' }}>{part.slice(2, -2)}</strong>;
+          return <strong key={idx} style={{ fontWeight: '600', color: 'inherit' }}>{part.slice(2, -2)}</strong>;
         }
         if (part.startsWith('`') && part.endsWith('`')) {
           return (
             <code
               key={idx}
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.8em',
-                background: 'var(--bg-raised)',
-                padding: '2px 5px',
-                borderRadius: '4px',
-                border: '1px solid var(--divider)',
-                color: 'var(--accent)'
-              }}
+              className="chat-code-inline"
             >
               {part.slice(1, -1)}
             </code>
@@ -96,7 +145,7 @@ const Chatbot = () => {
 
       if (trimmed === '---') {
         flushList(i);
-        elements.push(<hr key={i} style={{ border: '0', borderTop: '1px solid var(--divider)', margin: '12px 0' }} />);
+        elements.push(<hr key={i} style={{ border: '0', borderTop: '1px solid #E8E2D9', margin: '12px 0' }} />);
         continue;
       }
 
@@ -106,17 +155,16 @@ const Chatbot = () => {
         const level = headerMatch[1].length;
         const content = formatInline(headerMatch[2]);
         const style = {
-          fontFamily: 'var(--font-display)',
           fontWeight: '600',
-          color: 'var(--text-primary)',
-          marginTop: '12px',
-          marginBottom: '6px',
-          lineHeight: '1.2'
+          color: 'inherit',
+          marginTop: '10px',
+          marginBottom: '4px',
+          lineHeight: '1.3'
         };
 
-        if (level === 1) elements.push(<h1 key={i} style={{ ...style, fontSize: '1.2rem' }}>{content}</h1>);
-        else if (level === 2) elements.push(<h2 key={i} style={{ ...style, fontSize: '1.1rem' }}>{content}</h2>);
-        else elements.push(<h3 key={i} style={{ ...style, fontSize: '1.0rem' }}>{content}</h3>);
+        if (level === 1) elements.push(<h1 key={i} style={{ ...style, fontSize: '1.15rem' }}>{content}</h1>);
+        else if (level === 2) elements.push(<h2 key={i} style={{ ...style, fontSize: '1.05rem' }}>{content}</h2>);
+        else elements.push(<h3 key={i} style={{ ...style, fontSize: '0.95rem' }}>{content}</h3>);
         continue;
       }
 
@@ -126,13 +174,7 @@ const Chatbot = () => {
         elements.push(
           <blockquote
             key={i}
-            style={{
-              borderLeft: '3px solid var(--accent)',
-              paddingLeft: '10px',
-              margin: '8px 0',
-              color: 'var(--text-secondary)',
-              fontStyle: 'italic'
-            }}
+            className="chat-blockquote"
           >
             {content}
           </blockquote>
@@ -144,7 +186,7 @@ const Chatbot = () => {
       if (listMatch) {
         const content = formatInline(listMatch[2]);
         currentList.push(
-          <li key={`li-${i}-${currentList.length}`} className="bot-li" style={{ marginBottom: '4px', fontSize: '0.86rem', position: 'relative', paddingLeft: '18px' }}>
+          <li key={`li-${i}-${currentList.length}`} className="bot-li">
             {content}
           </li>
         );
@@ -153,7 +195,7 @@ const Chatbot = () => {
 
       if (trimmed !== '') {
         flushList(i);
-        elements.push(<p key={i} style={{ marginBottom: '8px', lineHeight: '1.6' }}>{formatInline(line)}</p>);
+        elements.push(<p key={i} style={{ marginBottom: '6px', lineHeight: '1.55' }}>{formatInline(line)}</p>);
       } else {
         flushList(i);
         elements.push(<div key={i} style={{ height: '4px' }} />);
@@ -184,7 +226,6 @@ const Chatbot = () => {
 
     try {
       const baseUrl = 'https://my-images-python-backend.onrender.com';
-      // const baseUrl = 'http://localhost:8000';
       const response = await fetch(`${baseUrl}/chat-portfolio`, {
         method: 'POST',
         headers: {
@@ -209,60 +250,66 @@ const Chatbot = () => {
       let botCitations = [];
       let botSuggestions = [];
       let lineBuffer = '';
+      let hasReceivedContent = false;
 
       const processLine = (line) => {
         const trimmedLine = line.trim();
         if (!trimmedLine || !trimmedLine.startsWith('data: ')) return;
 
         const data = trimmedLine.slice(6).trim();
-        if (data === '[DONE]') return;
+        if (!data || data === '[DONE]') return;
 
         try {
           const parsed = JSON.parse(data);
 
           if (parsed.type === 'token') {
-            botAnswer += parsed.content;
+            if (typeof parsed.content === 'string') {
+              botAnswer += parsed.content;
+            }
           } else if (parsed.type === 'result') {
-            botAnswer = parsed.data.answer || botAnswer;
-            botHighlights = parsed.data.highlights || [];
-            botCitations = parsed.data.citations || [];
-            botSuggestions = parsed.data.suggested_questions || [];
+            if (parsed.data) {
+              botAnswer = parsed.data.answer || botAnswer;
+              botHighlights = parsed.data.highlights || [];
+              botCitations = parsed.data.citations || [];
+              botSuggestions = parsed.data.suggested_questions || [];
+            }
           } else if (parsed.type === 'error') {
             botAnswer = parsed.message || 'An error occurred.';
           } else {
-            // Fallback for old format
+            // Fallback for direct format
             if (parsed.answer !== undefined) botAnswer = parsed.answer;
             if (parsed.highlights) botHighlights = parsed.highlights;
             if (parsed.citations) botCitations = parsed.citations;
             if (parsed.suggested_questions) botSuggestions = parsed.suggested_questions;
           }
-
-          setMessages(prev => {
-            const newMessages = [...prev];
-            newMessages[newMessages.length - 1] = {
-              role: 'bot',
-              text: botAnswer,
-              highlights: botHighlights,
-              citations: botCitations,
-              suggested_questions: botSuggestions
-            };
-            return newMessages;
-          });
         } catch (e) {
-          // Fallback if data is not valid JSON
-          botAnswer += data;
-          setMessages(prev => {
-            const newMessages = [...prev];
-            newMessages[newMessages.length - 1] = {
-              role: 'bot',
-              text: botAnswer,
-              highlights: botHighlights,
-              citations: botCitations,
-              suggested_questions: botSuggestions
-            };
-            return newMessages;
-          });
+          // Ignore partial unparseable JSON stream data
+          if (!data.startsWith('{') && !data.startsWith('[') && !data.includes('"answer"')) {
+            botAnswer += data;
+          }
         }
+
+        // Start a one-time 1.5s reveal timer on the very first token received
+        if (botAnswer.trim().length > 0 && !hasReceivedContent) {
+          hasReceivedContent = true;
+          streamingTimerRef.current = setTimeout(() => {
+            setIsStreaming(true);
+          }, 1500);
+        }
+
+        // Always keep the message state updated in the background;
+        // the bubble won't render until isStreaming flips true
+        setMessages(prev => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = {
+            role: 'bot',
+            text: botAnswer,
+            highlights: botHighlights,
+            citations: botCitations,
+            suggested_questions: botSuggestions
+          };
+          return newMessages;
+        });
       };
 
       while (true) {
@@ -274,7 +321,7 @@ const Chatbot = () => {
 
         lineBuffer += decoder.decode(value, { stream: true });
         const lines = lineBuffer.split('\n');
-        lineBuffer = lines.pop(); // Keep the partial line
+        lineBuffer = lines.pop(); // Keep partial line
 
         for (const line of lines) {
           processLine(line);
@@ -288,115 +335,164 @@ const Chatbot = () => {
         return newMessages;
       });
     } finally {
-      setIsLoading(false);
+      // Clear any pending reveal timer and show final result immediately
+      if (streamingTimerRef.current) {
+        clearTimeout(streamingTimerRef.current);
+        streamingTimerRef.current = null;
+      }
+      setIsStreaming(true);  // ensure bubble is visible with final content
+      setTimeout(() => {
+        setIsLoading(false);
+        setIsStreaming(false);
+      }, 50); // tiny tick so the final message renders before loading clears
     }
   };
 
   return (
     <div className={`chatbot-wrapper ${isOpen ? 'open' : ''}`}>
       {!isOpen && (
-        <button className="chatbot-toggle" onClick={() => setIsOpen(true)}>
-          <span className="icon">💬</span>
+        <button 
+          className="chatbot-toggle" 
+          onClick={() => setIsOpen(true)}
+          aria-label="Open Chatbot"
+        >
+          <span className="chatbot-toggle-icon">✨</span>
+          <span className="chatbot-toggle-badge">1</span>
         </button>
       )}
 
       {isOpen && (
         <div className="chatbot-window">
           <div className="chatbot-header">
-            <div className="bot-info">
-              <span className="bot-name">Sumit.AI</span>
-              <div className="bot-status">Online</div>
+            <div className="bot-profile">
+              <div className="bot-avatar">✨</div>
+              <div className="bot-info">
+                <span className="bot-name">Sumit.AI</span>
+                <div className="bot-status">
+                  <span className="status-dot"></span> Online
+                </div>
+              </div>
             </div>
-            <button className="close-btn" onClick={() => setIsOpen(false)}>×</button>
+            <div className="chatbot-header-actions">
+              <button 
+                className="clear-btn" 
+                onClick={clearChat} 
+                title="Clear Chat"
+                aria-label="Clear Chat"
+              >
+                🗑️
+              </button>
+              <button 
+                className="close-btn" 
+                onClick={() => setIsOpen(false)}
+                aria-label="Close Chatbot"
+              >
+                ✕
+              </button>
+            </div>
           </div>
 
           <div className="chatbot-messages" ref={messagesContainerRef}>
-            {messages.map((msg, i) => (
-              <div key={i} className={`message-group ${msg.role}`}>
-                <div className={`message ${msg.role}`}>
-                  <div className="message-content">
-                    {msg.role === 'bot' ? formatText(msg.text) : msg.text}
+            {messages.map((rawMsg, i) => {
+              const msg = getRenderableBotMessage(rawMsg);
+              // Skip the last bot placeholder while waiting for first token (typing indicator shows instead)
+              const isLastMessage = i === messages.length - 1;
+              if (msg.role === 'bot' && isLastMessage && isLoading && !isStreaming) {
+                return null;
+              }
+              return (
+                <div key={i} className={`message-group ${msg.role}`}>
+                  <div className={`message ${msg.role}`}>
+                    {msg.role === 'bot' && (
+                      <div className="msg-bot-avatar">✨</div>
+                    )}
+                    <div className="message-bubble">
+                      <div className="message-content">
+                        {msg.role === 'bot' ? formatText(msg.text) : msg.text}
+                      </div>
+
+                      {msg.role === 'bot' && msg.highlights?.length > 0 && (
+                        <div className="message-highlights">
+                          <div className="section-label">⚡ Highlights</div>
+                          <ul>
+                            {msg.highlights.map((h, idx) => (
+                              <li key={idx}>
+                                <span className="highlight-check">✓</span>
+                                <span>{h}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {msg.role === 'bot' && msg.citations?.length > 0 && (
+                        <div className="message-citations">
+                          <div className="section-label">🔗 Sources</div>
+                          <div className="citations-list">
+                            {msg.citations.map((c, idx) => {
+                              if (typeof c === 'string') {
+                                return (
+                                  <span key={idx} className="citation-tag">
+                                    🔗 {c}
+                                  </span>
+                                );
+                              }
+                              const pageText = c.page ? ` (P. ${c.page})` : '';
+                              const text = `${c.source || c.title || 'Source'}${pageText}`;
+                              if (c.url) {
+                                return (
+                                  <a
+                                    key={idx}
+                                    href={c.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="citation-tag clickable"
+                                    title={c.snippet || c.content || text}
+                                  >
+                                    🔗 {text}
+                                  </a>
+                                );
+                              }
+                              return (
+                                <span
+                                  key={idx}
+                                  className="citation-tag"
+                                  title={c.snippet || c.content || text}
+                                >
+                                  📄 {text}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  {msg.role === 'bot' && msg.highlights?.length > 0 && (
-                    <div className="message-highlights">
-                      <div className="section-label">Highlights</div>
-                      <ul>
-                        {msg.highlights.map((h, idx) => (
-                          <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                            <span style={{ color: 'var(--accent)', fontWeight: 'bold', fontSize: '0.9rem', lineHeight: '1.2' }}>✓</span>
-                            <span>{h}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {msg.role === 'bot' && msg.citations?.length > 0 && (
-                    <div className="message-citations">
-                      <div className="section-label" style={{ width: '100%', marginBottom: '4px' }}>Sources & Citations</div>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', width: '100%' }}>
-                        {msg.citations.map((c, idx) => {
-                          if (typeof c === 'string') {
-                            return (
-                              <span key={idx} className="citation-tag">
-                                🔗 {c}
-                              </span>
-                            );
-                          }
-                          const pageText = c.page ? ` (Page ${c.page})` : '';
-                          const text = `${c.source || c.title || 'Source'}${pageText}`;
-                          if (c.url) {
-                            return (
-                              <a
-                                key={idx}
-                                href={c.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="citation-tag clickable"
-                                title={c.snippet || c.content || text}
-                                style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                              >
-                                🔗 {text}
-                              </a>
-                            );
-                          }
-                          return (
-                            <span
-                              key={idx}
-                              className="citation-tag"
-                              title={c.snippet || c.content || text}
-                              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                            >
-                              📄 {text}
-                            </span>
-                          );
-                        })}
-                      </div>
+                  {msg.role === 'bot' && msg.suggested_questions?.length > 0 && (
+                    <div className="suggested-questions">
+                      {msg.suggested_questions.map((q, idx) => (
+                        <button
+                          key={idx}
+                          className="suggestion-pill"
+                          onClick={() => handleSend(q)}
+                          disabled={isLoading}
+                        >
+                          {q}
+                        </button>
+                      ))}
                     </div>
                   )}
                 </div>
-
-                {msg.role === 'bot' && msg.suggested_questions?.length > 0 && (
-                  <div className="suggested-questions">
-                    {msg.suggested_questions.map((q, idx) => (
-                      <button
-                        key={idx}
-                        className="suggestion-pill"
-                        onClick={() => handleSend(q)}
-                        disabled={isLoading}
-                      >
-                        {q}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            {isLoading && (
+              );
+            })}
+            {isLoading && !isStreaming && (
               <div className="message bot loading">
-                <div className="typing-indicator">
-                  <span></span><span></span><span></span>
+                <div className="msg-bot-avatar">✨</div>
+                <div className="message-bubble typing-bubble">
+                  <div className="typing-indicator">
+                    <span></span><span></span><span></span>
+                  </div>
                 </div>
               </div>
             )}
@@ -406,13 +502,17 @@ const Chatbot = () => {
           <div className="chatbot-input">
             <input
               type="text"
-              placeholder="Ask me anything..."
+              placeholder="Ask me anything about Sumit..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             />
-            <button onClick={() => handleSend()} disabled={isLoading}>
-              <span className="icon">➔</span>
+            <button 
+              onClick={() => handleSend()} 
+              disabled={isLoading || !input.trim()}
+              aria-label="Send message"
+            >
+              <span className="send-icon">➔</span>
             </button>
           </div>
         </div>
@@ -422,3 +522,4 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
+
