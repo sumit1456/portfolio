@@ -283,95 +283,161 @@ function App() {
         </div>{/* end .wrap */}
       </div>
 
-      <div className="skills-section" id="skills">
+      <div className="section" id="skills">
         <div className="wrap">
           <div className="section-label fade-up">Capabilities</div>
           <div className="section-title fade-up fade-up-delay-1">Technical <span>Ecosystem</span></div>
-          <div className="skills-grid-new">
 
-            <div className="skill-card-new fade-up">
-              <div className="skill-card-header">
-                <i className="ti ti-code-circle skill-icon"></i>
-                <div className="skill-card-title">Languages</div>
+          <div className="proj-list">
+            {/* Languages */}
+            <div className="proj-h-card fade-up">
+              <div className="proj-h-banner">
+                <span className="banner-num">01 / CORE</span>
+                <i className="ti ti-code-circle banner-icon"></i>
+                <div className="banner-label">Languages</div>
               </div>
-              <div className="skill-card-tags">
-                <span className="s-tag-new">Java (Core & Advanced)</span>
-                <span className="s-tag-new">SQL</span>
-                <span className="s-tag-new">JavaScript (ES6+)</span>
-                <span className="s-tag-new">HTML5 / CSS3</span>
-                <span className="s-tag-new">Python</span>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Primary Stack</span>
+                  <span className="proj-badge type">Core Development</span>
+                </div>
+                <div className="proj-name">Languages & Core Fundamentals</div>
+                <div className="proj-subtitle">Object-Oriented Programming & Web Standards</div>
+                <div className="proj-desc">Robust foundation in enterprise Java, SQL database querying, modern ES6+ JavaScript, and responsive layout styling.</div>
+                <div className="skill-card-tags" style={{ marginTop: '8px' }}>
+                  <span className="s-tag-new">Java (Core & Advanced)</span>
+                  <span className="s-tag-new">SQL</span>
+                  <span className="s-tag-new">JavaScript (ES6+)</span>
+                  <span className="s-tag-new">HTML5 / CSS3</span>
+                  <span className="s-tag-new">Python</span>
+                </div>
               </div>
             </div>
 
-            <div className="skill-card-new fade-up fade-up-delay-1">
-              <div className="skill-card-header">
-                <i className="ti ti-layers-intersect skill-icon"></i>
-                <div className="skill-card-title">Frameworks & Libraries</div>
+            {/* Frameworks & Libraries */}
+            <div className="proj-h-card fade-up">
+              <div className="proj-h-banner">
+                <span className="banner-num">02 / ECOSYSTEM</span>
+                <i className="ti ti-layers-intersect banner-icon"></i>
+                <div className="banner-label">Frameworks & Libraries</div>
               </div>
-              <div className="skill-card-tags">
-                <span className="s-tag-new">Spring Boot</span>
-                <span className="s-tag-new">Spring Security</span>
-                <span className="s-tag-new">Spring Data JPA</span>
-                <span className="s-tag-new">Hibernate</span>
-                <span className="s-tag-new">React</span>
-                <span className="s-tag-new">Redux</span>
-              </div>
-            </div>
-
-            <div className="skill-card-new fade-up fade-up-delay-2">
-              <div className="skill-card-header">
-                <i className="ti ti-cloud-computing skill-icon"></i>
-                <div className="skill-card-title">Cloud & DevOps</div>
-              </div>
-              <div className="skill-card-tags">
-                <span className="s-tag-new">AWS (EC2, S3, RDS, EventBridge)</span>
-                <span className="s-tag-new">Docker</span>
-                <span className="s-tag-new">Git</span>
-                <span className="s-tag-new">GitHub Actions</span>
-                <span className="s-tag-new">MinIO Object Storage</span>
-                <span className="s-tag-new">CI/CD</span>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Full Stack</span>
+                  <span className="proj-badge type">Java & React</span>
+                </div>
+                <div className="proj-name">Enterprise Frameworks & Libraries</div>
+                <div className="proj-subtitle">Spring Boot, ORM & Modern Frontend Architecture</div>
+                <div className="proj-desc">Industrial experience building scalable RESTful APIs, securing backend services with Spring Security, ORM mapping via Hibernate/JPA, and reactive React UIs.</div>
+                <div className="skill-card-tags" style={{ marginTop: '8px' }}>
+                  <span className="s-tag-new">Spring Boot</span>
+                  <span className="s-tag-new">Spring Security</span>
+                  <span className="s-tag-new">Spring Data JPA</span>
+                  <span className="s-tag-new">Hibernate</span>
+                  <span className="s-tag-new">React</span>
+                  <span className="s-tag-new">Redux</span>
+                </div>
               </div>
             </div>
 
-            <div className="skill-card-new fade-up fade-up-delay-1">
-              <div className="skill-card-header">
-                <i className="ti ti-database skill-icon"></i>
-                <div className="skill-card-title">Databases & Caching</div>
+            {/* Cloud & DevOps */}
+            <div className="proj-h-card fade-up">
+              <div className="proj-h-banner">
+                <span className="banner-num">03 / INFRASTRUCTURE</span>
+                <i className="ti ti-cloud-computing banner-icon"></i>
+                <div className="banner-label">Cloud & DevOps</div>
               </div>
-              <div className="skill-card-tags">
-                <span className="s-tag-new">PostgreSQL</span>
-                <span className="s-tag-new">Oracle SQL</span>
-                <span className="s-tag-new">Redis Cache</span>
-                <span className="s-tag-new">Database Indexing</span>
-                <span className="s-tag-new">Query Optimization</span>
-              </div>
-            </div>
-
-            <div className="skill-card-new fade-up fade-up-delay-2">
-              <div className="skill-card-header">
-                <i className="ti ti-shield-lock skill-icon"></i>
-                <div className="skill-card-title">Architecture & Security</div>
-              </div>
-              <div className="skill-card-tags">
-                <span className="s-tag-new">RESTful API Design</span>
-                <span className="s-tag-new">OAuth2</span>
-                <span className="s-tag-new">JWT (Access/Refresh Tokens)</span>
-                <span className="s-tag-new">Rate Limiting</span>
-                <span className="s-tag-new">RabbitMQ</span>
-                <span className="s-tag-new">Maven</span>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Cloud Native</span>
+                  <span className="proj-badge type">DevOps & Deployment</span>
+                </div>
+                <div className="proj-name">Cloud Services & DevOps Automation</div>
+                <div className="proj-subtitle">AWS Infrastructure, Docker & CI/CD Pipelines</div>
+                <div className="proj-desc">Automated deployment workflows, containerized microservices hosted on AWS EC2, automated GitHub Actions CI/CD, and S3/MinIO storage integrations.</div>
+                <div className="skill-card-tags" style={{ marginTop: '8px' }}>
+                  <span className="s-tag-new">AWS (EC2, S3, RDS, EventBridge)</span>
+                  <span className="s-tag-new">Docker</span>
+                  <span className="s-tag-new">Git</span>
+                  <span className="s-tag-new">GitHub Actions</span>
+                  <span className="s-tag-new">MinIO Object Storage</span>
+                  <span className="s-tag-new">CI/CD</span>
+                </div>
               </div>
             </div>
 
-            <div className="skill-card-new fade-up fade-up-delay-3">
-              <div className="skill-card-header">
-                <i className="ti ti-cpu skill-icon"></i>
-                <div className="skill-card-title">Testing & AI Integrations</div>
+            {/* Databases & Caching */}
+            <div className="proj-h-card fade-up">
+              <div className="proj-h-banner">
+                <span className="banner-num">04 / DATA STORE</span>
+                <i className="ti ti-database banner-icon"></i>
+                <div className="banner-label">Databases & Caching</div>
               </div>
-              <div className="skill-card-tags">
-                <span className="s-tag-new">Postman API Testing</span>
-                <span className="s-tag-new">Swagger Doc</span>
-                <span className="s-tag-new">LLM Integration (Groq AI)</span>
-                <span className="s-tag-new">PDF Data Extraction</span>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Data Engineering</span>
+                  <span className="proj-badge type">Relational & Cache</span>
+                </div>
+                <div className="proj-name">Database Engineering & In-Memory Caching</div>
+                <div className="proj-subtitle">PostgreSQL, Oracle SQL & Redis Performance</div>
+                <div className="proj-desc">Relational database design, query optimization, indexing strategies for large datasets, and Redis caching for ultra-low latency reads.</div>
+                <div className="skill-card-tags" style={{ marginTop: '8px' }}>
+                  <span className="s-tag-new">PostgreSQL</span>
+                  <span className="s-tag-new">Oracle SQL</span>
+                  <span className="s-tag-new">Redis Cache</span>
+                  <span className="s-tag-new">Database Indexing</span>
+                  <span className="s-tag-new">Query Optimization</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Architecture & Security */}
+            <div className="proj-h-card fade-up">
+              <div className="proj-h-banner">
+                <span className="banner-num">05 / SECURITY</span>
+                <i className="ti ti-shield-lock banner-icon"></i>
+                <div className="banner-label">Architecture & Security</div>
+              </div>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Distributed Systems</span>
+                  <span className="proj-badge type">API Security</span>
+                </div>
+                <div className="proj-name">System Architecture & API Security</div>
+                <div className="proj-subtitle">RESTful APIs, Auth & Asynchronous Queues</div>
+                <div className="proj-desc">Implementing robust authentication using OAuth2 and JWT, rate limiting, microservices communication patterns, and RabbitMQ message queues.</div>
+                <div className="skill-card-tags" style={{ marginTop: '8px' }}>
+                  <span className="s-tag-new">RESTful API Design</span>
+                  <span className="s-tag-new">OAuth2</span>
+                  <span className="s-tag-new">JWT (Access/Refresh Tokens)</span>
+                  <span className="s-tag-new">Rate Limiting</span>
+                  <span className="s-tag-new">RabbitMQ</span>
+                  <span className="s-tag-new">Maven</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Testing & AI Integrations */}
+            <div className="proj-h-card fade-up">
+              <div className="proj-h-banner">
+                <span className="banner-num">06 / INNOVATION</span>
+                <i className="ti ti-cpu banner-icon"></i>
+                <div className="banner-label">Testing & AI Integrations</div>
+              </div>
+              <div className="proj-h-body">
+                <div className="proj-h-meta">
+                  <span className="proj-badge role">Quality & AI</span>
+                  <span className="proj-badge type">API & LLMs</span>
+                </div>
+                <div className="proj-name">API Testing & AI System Integrations</div>
+                <div className="proj-subtitle">Postman Automated Testing & Groq LLM Workflows</div>
+                <div className="proj-desc">Contract testing with Postman and Swagger, integrating LLM providers (Groq AI), vector similarity search, and structured PDF content parsing.</div>
+                <div className="skill-card-tags" style={{ marginTop: '8px' }}>
+                  <span className="s-tag-new">Postman API Testing</span>
+                  <span className="s-tag-new">Swagger Doc</span>
+                  <span className="s-tag-new">LLM Integration (Groq AI)</span>
+                  <span className="s-tag-new">PDF Data Extraction</span>
+                </div>
               </div>
             </div>
 
@@ -379,29 +445,82 @@ function App() {
         </div>{/* end .wrap */}
       </div>
 
-      <div className="edu-section" id="education">
+      <div className="section" id="education">
         <div className="wrap">
           <div className="section-label fade-up">Academic & Professional Foundation</div>
           <div className="section-title fade-up fade-up-delay-1">Credentials & <span>Certifications</span></div>
-          <div className="edu-grid">
-            <div className="edu-card fade-up">
-              <div className="edu-year">2025 – 2027 (Expected)</div>
-              <div className="edu-title">Master of Science in Computer Applications</div>
-              <div className="edu-org">Savitribai Phule Pune University</div>
-              <div className="edu-detail">Current First Year Performance: <span className="edu-grade">9.23 GPA</span>. Focuses on advanced software engineering, distributed systems, and backend design patterns.</div>
+
+          <div className="edu-milestones-list">
+            {/* MSc CA */}
+            <div className="edu-milestone-card fade-up">
+              <div className="edu-card-header-bar">
+                <div className="edu-card-tag-group">
+                  <span className="edu-badge-type">🎓 Master's Degree</span>
+                  <span className="edu-badge-year">2025 – 2027 (Expected)</span>
+                </div>
+                <span className="edu-badge-score">⭐ 9.23 GPA</span>
+              </div>
+              <div className="edu-card-name">Master of Science in Computer Applications (M.Sc CA)</div>
+              <div className="edu-card-inst">
+                <i className="ti ti-building-arch"></i> Savitribai Phule Pune University
+              </div>
+              <div className="edu-card-desc">
+                Advanced graduate program focusing on modern software engineering, distributed systems, backend architectural patterns, database administration, and cloud computing.
+              </div>
+              <div className="edu-card-highlights">
+                <div className="edu-chip"><i className="ti ti-check"></i> Academic Distinction: 9.23 GPA</div>
+                <div className="edu-chip"><i className="ti ti-check"></i> Distributed Systems & Microservices</div>
+                <div className="edu-chip"><i className="ti ti-check"></i> Advanced Java Frameworks & System Design</div>
+              </div>
             </div>
-            <div className="edu-card fade-up fade-up-delay-1">
-              <div className="edu-year">2024</div>
-              <div className="edu-title">Java Full Stack Development</div>
-              <div className="edu-org">QSpiders Wakad</div>
-              <div className="edu-detail">Professional training program. Developed industrial competencies in Core & Advanced Java, SQL, Hibernate, Spring Boot, React, and RESTful web services.</div>
+
+            {/* QSpiders */}
+            <div className="edu-milestone-card fade-up fade-up-delay-1">
+              <div className="edu-card-header-bar">
+                <div className="edu-card-tag-group">
+                  <span className="edu-badge-type">📜 Professional Certification</span>
+                  <span className="edu-badge-year">2024</span>
+                </div>
+                <span className="edu-badge-score">⚡ Full Stack Diploma</span>
+              </div>
+              <div className="edu-card-name">Java Full Stack Development Program</div>
+              <div className="edu-card-inst">
+                <i className="ti ti-certificate"></i> QSpiders Training Institute · Wakad, Pune
+              </div>
+              <div className="edu-card-desc">
+                Comprehensive hands-on training program focused on enterprise Java web application development, microservices architecture, relational database persistence, and full-stack integration.
+              </div>
+              <div className="edu-card-highlights">
+                <div className="edu-chip"><i className="ti ti-check"></i> Core & Advanced Java</div>
+                <div className="edu-chip"><i className="ti ti-check"></i> Spring Boot & Hibernate ORM</div>
+                <div className="edu-chip"><i className="ti ti-check"></i> React & RESTful Web Services</div>
+                <div className="edu-chip"><i className="ti ti-check"></i> Git & Security Patterns</div>
+              </div>
             </div>
-            <div className="edu-card fade-up fade-up-delay-2">
-              <div className="edu-year">2021 – 2024</div>
-              <div className="edu-title">Bachelor of Science in Chemistry</div>
-              <div className="edu-org">Shivaji University</div>
-              <div className="edu-detail">Graduated with <span className="edu-grade">65%</span>. Gained analytical research methodologies, mathematical reasoning, and systematic troubleshooting workflows.</div>
+
+            {/* BSc Chemistry */}
+            <div className="edu-milestone-card fade-up fade-up-delay-2">
+              <div className="edu-card-header-bar">
+                <div className="edu-card-tag-group">
+                  <span className="edu-badge-type">🔬 Bachelor's Degree</span>
+                  <span className="edu-badge-year">2021 – 2024</span>
+                </div>
+                <span className="edu-badge-score">🏆 Graduated 65%</span>
+              </div>
+              <div className="edu-card-name">Bachelor of Science in Chemistry (B.Sc)</div>
+              <div className="edu-card-inst">
+                <i className="ti ti-school"></i> Shivaji University
+              </div>
+              <div className="edu-card-desc">
+                Undergraduate scientific foundation providing strong analytical thinking, mathematical reasoning, quantitative research methodologies, and systematic problem-solving workflows applied to software systems.
+              </div>
+              <div className="edu-card-highlights">
+                <div className="edu-chip"><i className="ti ti-check"></i> Graduated with 65% Aggregate</div>
+                <div className="edu-chip"><i className="ti ti-check"></i> Quantitative Research Methodologies</div>
+                <div className="edu-chip"><i className="ti ti-check"></i> Systematic Problem-Solving Workflows</div>
+              </div>
             </div>
+
           </div>
         </div>{/* end .wrap */}
       </div>
